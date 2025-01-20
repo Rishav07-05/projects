@@ -1,9 +1,8 @@
 import About from "./components/About"
+import Eyes from "./components/Eyes"
 import LandingPage from "./components/LandingPage"
 import Marquee from "./components/Marquee"
 import Navbar from "./components/Navbar"
-
-// import React from 'react'
 
 
 const App = () => {
@@ -13,6 +12,7 @@ const App = () => {
       <LandingPage />
       <Marquee />
       <About />
+      <Eyes />
     </div>
   )
 }
