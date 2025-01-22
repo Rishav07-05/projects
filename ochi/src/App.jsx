@@ -1,4 +1,5 @@
 import About from "./components/About"
+import Client from "./components/Client"
 import Eyes from "./components/Eyes"
 import Feature from "./components/Feature"
 import LandingPage from "./components/LandingPage"
@@ -15,6 +16,7 @@ const App = () => {
       <About />
       <Eyes />
       <Feature />
+      <Client />
     </div>
   )
 }
