@@ -4,7 +4,7 @@ const Client = () => {
   return (
     <div className=" w-full overflow-hidden h-[140vh]">
       <h1 className="text-[70px] tracking-tighter leading-none px-20 mt-20">
-        Clients reviews
+        Client's reviews
       </h1>
       <div className="border-t-[1px] border-zinc-700 mt-16"></div>
 
