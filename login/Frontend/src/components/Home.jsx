@@ -9,7 +9,7 @@ const Home = () => {
       <div className="flex justify-between items-center p-10">
         <h1 className="text-4xl text-[lightblue] font-bold font-serif">AUTH</h1>
         <button className="px-9 py-3 rounded-full bg-green-500 border-green-400 font-bold text-zinc-900 text-xl hover:border-green-500 hover:shadow-[0_0_10px_5px_rgba(0,255,0,0.7)] transform translate-all hover:scale-110 ">
-          <Link to="/login">LOGIN</Link>
+          <Link to="/login">Get Started</Link>
       </button>
       </div>
       <div className="flex justify-center items-center p-36">
