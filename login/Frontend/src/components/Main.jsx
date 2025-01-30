@@ -1,8 +1,15 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const main = () => {
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  const toggleProfile = () => {
+    setIsProfileOpen(!isProfileOpen);
+  };
+
   return (
-    <div className="h-screen w-full">
+    <div className="h-screen w-full ">
       <div className="p-10 flex items-center justify-between fixed top-0 left-0 w-full z-50 ">
         <h1 className="text-4xl text-[lightblue] font-bold font-serif">AUTH</h1>
         <div className="flex justify-center items-center  gap-20 border-2 border-zinc-600 p-7 rounded-4xl ">
@@ -12,16 +19,16 @@ const main = () => {
           <a href="#post">
             <h1 className="text-2xl text-zinc-100 font-semibold">Post</h1>
           </a>
-          <a href="">
+          <a href="#contact">
             <h1 className="text-2xl text-zinc-100 font-semibold">Contact Us</h1>
           </a>
         </div>
         <div className="flex items-center  px-5 rounded-md">
-          <span className="text-2xl text-white mr-4 font-bold">My Profile</span>
+          
           <div className="w-[50px] h-[50px] bg-emerald-500 rounded-full ">
-            <a href="">
+            <div onClick={toggleProfile} className="cursor-pointer">
               <h1 className="text-center mt-[6px] font-bold text-3xl">R</h1>
-            </a>
+            </div>
           </div>
         </div>
       </div>
@@ -70,46 +77,88 @@ const main = () => {
         {/* post image and text  */}
 
         <div className="flex flex-wrap justify-start gap-6 p-6">
-  {/* Post Card */}
-  {[...Array(7)].map((_, index) => (
-    <div key={index} className="border-2 border-zinc-700 w-[470px] mr-32">
-      {/* Image Section */}
-      <div className="h-[350px] w-[450px] bg-[lightblue] rounded-3xl mx-auto">
-        <img
-          src="https://imgs.search.brave.com/-8z2ISKGj0hp7rQV8I0CK9PASaEvw8AdKoigpM-nKKo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YWJsb2cuY2RucGsu/bmV0L3NpdGVzLzkv/MjAyMi8wNi9Xb3Js/ZC1QcmVzcy1QaG90/by1Db3Zlci5wbmc"
-          className="w-full h-full object-cover rounded-3xl"
-          alt=""
-        />
-      </div>
+          {/* Post Card */}
+          {[...Array(7)].map((_, index) => (
+            <div
+              key={index}
+              className="border-2 border-zinc-700 w-[470px] mr-32 rounded-xl "
+            >
+              {/* Image Section */}
+              <div className="h-[350px] w-[450px] bg-[lightblue] rounded-3xl mx-auto">
+                <img
+                  src="https://imgs.search.brave.com/-8z2ISKGj0hp7rQV8I0CK9PASaEvw8AdKoigpM-nKKo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YWJsb2cuY2RucGsu/bmV0L3NpdGVzLzkv/MjAyMi8wNi9Xb3Js/ZC1QcmVzcy1QaG90/by1Db3Zlci5wbmc"
+                  className="w-full h-full object-cover rounded-3xl"
+                  alt=""
+                />
+              </div>
 
-      {/* Text Section */}
-      <div className="h-[150px] w-[450px] text-[lightblue] mx-auto p-4">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-          praesentium quisquam vero provident corrupti id, repellat non facere
-          sequi dolorum!
-        </p>
-      </div>
+              {/* Text Section */}
+              <div className="h-[150px] w-[450px] text-[lightblue] mx-auto p-4">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Doloremque praesentium quisquam vero provident corrupti id,
+                  repellat non facere sequi dolorum!
+                </p>
+              </div>
 
-      {/* User Info & Date */}
-      <div className="flex items-center gap-3 p-4">
-        {/* Profile Icon */}
-        <div className="flex justify-center items-center bg-emerald-500 h-[40px] w-[40px] rounded-full">
-          <h1 className="text-white text-lg font-bold">R</h1>
+              {/* User Info & Date */}
+              <div className="flex items-center gap-3 p-4">
+                {/* Profile Icon */}
+                <div className="flex justify-center items-center bg-emerald-500 h-[40px] w-[40px] rounded-full">
+                  <h1 className="text-white text-lg font-bold">R</h1>
+                </div>
+
+                {/* Post Info */}
+                <div className="text-white text-sm">
+                  <h1 className="font-semibold">Posted by Rishav</h1>
+                  <h1 className="text-gray-300">
+                    {new Date().toLocaleString()}
+                  </h1>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-
-        {/* Post Info */}
-        <div className="text-white text-sm">
-          <h1 className="font-semibold">Posted by Rishav</h1>
-          <h1 className="text-gray-300">{new Date().toLocaleString()}</h1>
-        </div>
-      </div>
-    </div>
-  ))}
-</div>
-
       </div>
       {/* end of post */}
+
+      {/* contact section */}
+      <div
+        id="contact"
+        className="w-full bg-[#060606] text-2xl text-amber-200 h-[500px] flex items-center justify-around border-2 border-zinc-700"
+      >
+        <h1>For any suspcious activity please contact us at: </h1>
+        <div>
+          <p>
+            <a href="#">Instagram</a>
+          </p>
+          <p>
+            <a href="#">Twitter</a>
+          </p>
+          <p>
+            <a href="#">Facebook</a>
+          </p>
+          <p>Phone No. 7777777777</p>
+        </div>
+      </div>
+
+      {/* profile  */}
+      <div
+  className={`fixed top-0 right-0 h-full bg-zinc-700 w-[400px] z-200 transition-transform ${
+    isProfileOpen ? "translate-x-0" : "translate-x-full"
+  }`}
+>
+  <button className="absolute top-5 right-5 text-xl font-bold" onClick={toggleProfile}>
+    ✖
+        </button>
+        <div className="flex flex-col items-center mt-20 space-y-4">
+          <h1 className="text-center mt-20 text-2xl font-semibold text--500">My Post</h1>
+        <h1 className="text-center mt-4 text-2xl font-semibold text--500">LogOut </h1>
+       <h1 className="text-center mt-4 text-2xl font-semibold text--500">Delete</h1>
+        </div>
+  
+</div>
+
     </div>
   );
 };

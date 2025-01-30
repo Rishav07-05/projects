@@ -1,4 +1,6 @@
-import {  useRef } from 'react';
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
+
 
 const Createpost = () => {
   // const [isBlurred, setIsBlurred] = useState(false);
@@ -28,7 +30,9 @@ const Createpost = () => {
   src="https://www.svgrepo.com/show/13691/plus.svg"
   alt="Upload"
         />
-        <button className='px-6 py-1 mr-10 border-[2px] border-green-500 bg-green-500 hover:shadow-[0_0_40px_5px_rgba(255,255,0,0.7)] rounded-full text-2xl text-white'>Send</button>
+          <button className='px-6 py-1 mr-10 border-[2px] border-green-500 bg-green-500 hover:shadow-[0_0_40px_5px_rgba(255,255,0,0.7)] rounded-full text-2xl text-white'>
+            <Link to="/main">Send</Link>
+        </button>
         <input
           type="file"
           ref={fileInputRef}
