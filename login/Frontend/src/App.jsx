@@ -7,6 +7,7 @@ import Createpost from "./components/Createpost";
 
 
 
+
 const App = () => {
   return (
     <div className="h-screen w-full bg-[#060606]">
