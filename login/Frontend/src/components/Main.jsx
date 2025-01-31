@@ -71,7 +71,7 @@ const main = () => {
 
       {/* post section */}
       <div id="post" className=" w-full bg-[#060606]">
-        <div className="text-center text-cyan-400 font-bold mt-[117px] ml-10 text-4xl mb-10">
+        <div className="text-center text-cyan-200  mt-[117px] ml-10 text-4xl mb-10 font-dyna">
           Entertain Yourself with some post🤩🥳
         </div>
         {/* post image and text  */}
@@ -125,20 +125,21 @@ const main = () => {
       {/* contact section */}
       <div
         id="contact"
-        className="w-full bg-[#060606] text-2xl text-amber-200 h-[500px] flex items-center justify-around border-2 border-zinc-700"
+        className="w-full bg-[#060606] text-2xl text-amber-200 h-[500px] flex items-center justify-around border-2  border-zinc-700"
       >
-        <h1>For any suspcious activity please contact us at: </h1>
+        <h1 className="text-4xl text-[lightblue] font-bold font-serif">For any queries please contact us at: </h1>
         <div>
-          <p>
+          <p className="text-2xl text-emerald-200">
             <a href="#">Instagram</a>
           </p>
-          <p>
+          <p className="text-2xl text-emerald-200">
             <a href="#">Twitter</a>
           </p>
-          <p>
+          <p className="text-2xl text-emerald-200">
             <a href="#">Facebook</a>
           </p>
-          <p>Phone No. 7777777777</p>
+          <p className="text-2xl text-emerald-200">Phone No: 7777777777</p>
+          <p className="text-2xl text-emerald-200">abcgmail.com</p>
         </div>
       </div>
 
