@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+  --font-secondary: "Courgette", "serif";
+  --font-dyna: "DynaPuff", "serif";
+}
