@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const main = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -7,6 +7,8 @@ const main = () => {
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
   };
+
+  const navigate = useNavigate();
 
   return (
     <div className="h-screen w-full ">
@@ -154,7 +156,10 @@ const main = () => {
         </button>
         <div className="flex flex-col items-center mt-20 space-y-4">
           <h1 className="text-center mt-20 text-2xl font-semibold text--500">My Post</h1>
-        <h1 className="text-center mt-4 text-2xl font-semibold text--500">LogOut </h1>
+        <h1 className="text-center mt-4 text-2xl font-semibold text--500"><button className="p-10 bg-red-100 cursor-pointer" onClick={() => {
+            localStorage.removeItem('authToken');
+            navigate('/login');
+        }}>Logout</button> </h1>
        <h1 className="text-center mt-4 text-2xl font-semibold text--500">Delete</h1>
         </div>
   
