@@ -5,13 +5,7 @@ const Home = () => {
   return (
     <div className="h-screen w-full bg-black overflow-hidden relative">
       {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
-        style={{
-          backgroundImage:
-            "url('https://cdn.pixabay.com/photo/2014/11/29/19/21/face-550768_960_720.jpg')",
-        }}
-      ></div>
+     
 
       <div className="flex justify-between items-center p-10 relative z-10">
         <h1 className="text-4xl text-zinc-400 font-secondary">POSTIFY</h1>
@@ -23,15 +17,21 @@ const Home = () => {
       </div>
 
       <div className="p-10 mt-10 relative z-10">
-        <h1 className="text-9xl mb-10 font-dyna font-bold text-[lightblue]">
+        <h1 className="text-5xl mb-10 font-dyna text-[lightblue] leading-none ">
           Show the world
         </h1>
-        <h1 className="text-9xl font-dyna font-bold text-[lightgoldenrodyellow] mb-10">
-          through your lens.
+        <h1 className="text-9xl font-dyna font-bold text-[lightgoldenrodyellow] mb-10 leading-none">
+          through your lens
         </h1>
-        <h1 className="text-9xl font-dyna font-bold bg-gradient-to-r from-green-300 to-blue-600 bg-clip-text text-transparent">
-         - Postify
+        <h1 className="text-4xl font-dyna  text-zinc-400 ">
+         - POSTIFY
         </h1>
+      </div>
+      <div className="w-[45%]  h-[45%] ml-10 absolute right-10 mr-48 group ">
+        <img className="object-cover rounded-3xl mt-[-64px] transform translate-y-10 duration-300 hover:scale-105 " src="https://imgs.search.brave.com/62w1S3ru4eu8x-3bXMz_jsss6q7yDEkQ1Jvx4E5RdNU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/c3RhdGljb250Lm5l/dC9wcm9kdWN0cy8w/MDIzLzU1L2QwZjQ1/OTc5YTYyNGJmZTU4/OGQwMDc1NzA3ZTNi/NzllN2Y5Y2IyMjAu/d2VicA" alt="" />
+      </div>
+      <div className="w-[25%]  h-[45%] mt-32 ml-20">
+        <img className="object-cover rounded-2xl mt-[-64px] transform translate-y-10 duration-300 hover:scale-105 " src="https://images.pexels.com/photos/1795560/pexels-photo-1795560.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
       </div>
     </div>
   );

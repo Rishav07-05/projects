@@ -36,8 +36,8 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen w-full bg-[#111] text-white flex items-center justify-center">
-      <div className="w-[450px] bg-black p-12 pt-24 pb-28 rounded-xl shadow-lg relative z-10">
+    <div className="h-screen w-full bg-[#111] text-white flex items-center justify-center ">
+      <div className="w-[450px] bg-black p-12 pt-24 pb-28 rounded-xl  relative z-10 shadow-[0_10px_50px_rgba(0,0,0,0.8)] ">
         <h1 className="text-3xl text-center text-green-500 mb-8 font-semibold">Login</h1>
         
         {error && <div className="text-red-500 text-center mb-4">{error}</div>}

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Instagram, Twitter, Facebook } from "lucide-react";
+
 
 const main = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -11,7 +13,7 @@ const main = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen w-full ">
+    <div className="h-screen w-full  ">
       <div className="p-10 flex items-center justify-between fixed top-0 left-0 w-full z-50 ">
         <h1 className="text-4xl text-zinc-400 font-secondary">POSTIFY</h1>
         <div className="flex justify-center items-center  gap-20 border-2 border-zinc-600 p-7 rounded-4xl ">
@@ -52,9 +54,9 @@ const main = () => {
           <h1 className="text-center text-5xl mb-8 text-[whitesmoke] font-bold font-serif">
             Want to share something about yourself
           </h1>
-          <p className="text-red-100 text-center">
-            Best platform to interact with people of your nearby with a modified
-            version of instagram...🤯🤯🤯
+          <p className="text-red-200 text-center">
+            Best platform to interact 
+            A version of instagram...🤯🤯🤯
           </p>
         </div>
         <div className="flex justify-center items-center">
@@ -124,25 +126,48 @@ const main = () => {
       </div>
       {/* end of post */}
 
+      {/* remarks page  */}
+     <div className="w-full h-[70%] bg-[#060606] flex flex-col">
+  {/* Names Array */}
+  {['Karl', 'Max', 'Henry', 'Alice', 'Bob', 'Eve', 'John'].map((name, index) => (
+    <div key={index} className="w-full border-t border-zinc-400 py-7 flex items-center">
+      <img src="https://i.pravatar.cc/300" className="w-[50px] h-[50px] rounded-full ml-10" alt="" />
+      <h1 className="text-4xl text-zinc-400 font-bold font-dancing ml-10">{name}</h1>
+    </div>
+  ))}
+
+  {/* Last Border */}
+  <div className="w-full border-t border-zinc-400 py-4 flex items-center"></div>
+</div>
+
+
+
+
+
       {/* contact section */}
-      <div
-        id="contact"
-        className="w-full bg-[#060606] text-2xl text-amber-200 h-[500px] flex items-center justify-around border-2  border-zinc-700"
-      >
-        <h1 className="text-4xl text-[lightblue] font-bold font-serif">For any queries please contact us at: </h1>
-        <div>
-          <p className="text-2xl text-emerald-200">
-            <a href="#">Instagram</a>
-          </p>
-          <p className="text-2xl text-emerald-200">
-            <a href="#">Twitter</a>
-          </p>
-          <p className="text-2xl text-emerald-200">
-            <a href="#">Facebook</a>
-          </p>
-          <p className="text-2xl text-emerald-200">Phone No: 7777777777</p>
-          <p className="text-2xl text-emerald-200">abcgmail.com</p>
+      <div className="w-full bg-[#060606] overflow-hidden">
+        <div id="contact" className="w-[98%] ml-5 rounded-t-4xl h-[400px]  bg-zinc-800 text-amber-200 py-10 border-t border-zinc-700">
+        <h1 className="text-4xl text-zinc-400 font-secondary  ml-6">POSTIFY</h1>
+      <div className="max-w-4xl mt-44 flex flex-col items-center">
+        
+        <div className="flex gap-6">
+          <a href="#" className="flex items-center gap-2 text-emerald-200 hover:text-emerald-400 transition">
+            <Instagram size={24} /> Instagram
+          </a>
+          <a href="#" className="flex items-center gap-2 text-emerald-200 hover:text-emerald-400 transition">
+            <Twitter size={24} /> Twitter
+          </a>
+          <a href="#" className="flex items-center gap-2 text-emerald-200 hover:text-emerald-400 transition">
+            <Facebook size={24} /> Facebook
+          </a>
         </div>
+
+        <div className="mt-4 text-center">
+          <p className="text-lg"> Phone No: <span className="text-emerald-300">7777777777</span></p>
+          <p className="text-lg"> Email: <span className="text-emerald-300">abc@gmail.com</span></p>
+        </div>
+      </div>
+    </div>
       </div>
 
       {/* profile  */}
@@ -155,12 +180,14 @@ const main = () => {
     ✖
         </button>
         <div className="flex flex-col items-center mt-20 space-y-4">
-          <h1 className="text-center mt-20 text-2xl font-semibold text--500">My Post</h1>
-        <h1 className="text-center mt-4 text-2xl font-semibold text--500"><button className="p-10 bg-red-100 cursor-pointer" onClick={() => {
+          <h1 className="text-center mt-20 text-2xl font-semibold text--500"><button className="px-9 py-3 rounded-full bg-green-500 border-green-400 font-bold text-zinc-900 text-xl hover:border-green-500 hover:shadow-[0_0_10px_5px_rgba(0,255,0,0.7)] transform transition-all hover:scale-110">My Post</button></h1>
+        <h1 className="text-center mt-4 text-2xl font-semibold text--500"><button className="px-9 py-3 rounded-full bg-green-500 border-green-400 font-bold text-zinc-900 text-xl hover:border-green-500 hover:shadow-[0_0_10px_5px_rgba(0,255,0,0.7)] transform transition-all hover:scale-110" onClick={() => {
             localStorage.removeItem('authToken');
             navigate('/login');
         }}>Logout</button> </h1>
-       <h1 className="text-center mt-4 text-2xl font-semibold text--500">Delete</h1>
+          <h1 className="text-center mt-4 text-2xl font-semibold text--500">
+            <button className="px-9 py-3 rounded-full bg-red-500 border-green-400 font-bold text-zinc-900 text-xl hover:border-red-500 hover:shadow-[0_0_10px_5px_rgba(255,0,0,0.7)] transform transition-all hover:scale-110 " >Delete</button>
+       </h1>
         </div>
   
 </div>
