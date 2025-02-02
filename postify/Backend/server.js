@@ -10,18 +10,18 @@ const authRoutes = require('./routes/authRoutes')
 
 
 
+app.use(bodyParser.json());
+app.use(cors())
+
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.json({message: "Welcome to the Postify" });
 });
 
 
 
-app.use(bodyParser.json());
-app.use(cors())
 app.use('/auth' , authRoutes)
-
 
 
 
