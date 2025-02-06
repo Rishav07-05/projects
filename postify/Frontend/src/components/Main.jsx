@@ -1,11 +1,29 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Instagram, Twitter, Facebook } from "lucide-react";
+import axios from "axios";
 
 
-const main = () => {
+
+const Main = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [posts, setPosts] = useState([]);
 
+  useEffect(() => {
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/posts");
+      console.log(response.data); // Check the response
+      setPosts(response.data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
+
+  fetchPosts();
+}, []); // Empty dependency array ensures it runs only once on mount
+
+  
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
   };
@@ -41,7 +59,7 @@ const main = () => {
         <div className="flex items-center justify-center ">
           <h1
             className="text-[whitesmoke] font-bold font-serif text-center h-8 border-[1px] border-t-amber-500 border-l-amber-200 border-b-amber-200 border-r-amber-500 rounded-full w-[200px] mt-16"
-            style={{}}
+            
           >
             Post & Beautify
           </h1>
@@ -75,14 +93,13 @@ const main = () => {
 
       {/* post section */}
       <div id="post" className=" w-full bg-[#060606]">
-        <div className="text-center text-cyan-200  mt-[117px] ml-10 text-4xl mb-10 font-dyna">
+        <div className="text-center text-cyan-200 mt-[117px] ml-10 text-4xl mb-10 font-dyna">
           Entertain Yourself with some post🤩🥳
         </div>
-        {/* post image and text  */}
 
+        {/* Post Cards */}
         <div className="flex flex-wrap justify-start gap-6 p-6">
-          {/* Post Card */}
-          {[...Array(7)].map((_, index) => (
+          {posts.map((post, index) => (
             <div
               key={index}
               className="border-2 border-zinc-700 w-[470px] mr-32 rounded-xl "
@@ -90,7 +107,7 @@ const main = () => {
               {/* Image Section */}
               <div className="h-[350px] w-[450px] bg-[lightblue] rounded-3xl mx-auto">
                 <img
-                  src="https://imgs.search.brave.com/-8z2ISKGj0hp7rQV8I0CK9PASaEvw8AdKoigpM-nKKo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YWJsb2cuY2RucGsu/bmV0L3NpdGVzLzkv/MjAyMi8wNi9Xb3Js/ZC1QcmVzcy1QaG90/by1Db3Zlci5wbmc"
+                  src={post.image} // Use the image URL from the backend
                   className="w-full h-full object-cover rounded-3xl"
                   alt=""
                 />
@@ -98,11 +115,7 @@ const main = () => {
 
               {/* Text Section */}
               <div className="h-[150px] w-[450px] text-[lightblue] mx-auto p-4">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Doloremque praesentium quisquam vero provident corrupti id,
-                  repellat non facere sequi dolorum!
-                </p>
+                <p>{post.content}</p> {/* Display post content */}
               </div>
 
               {/* User Info & Date */}
@@ -114,10 +127,8 @@ const main = () => {
 
                 {/* Post Info */}
                 <div className="text-white text-sm">
-                  <h1 className="font-semibold">Posted by Rishav</h1>
-                  <h1 className="text-gray-300">
-                    {new Date().toLocaleString()}
-                  </h1>
+                  <h1 className="font-semibold">Posted by </h1>
+                  <h1 className="text-gray-300">{new Date(post.createdAt).toLocaleString()}</h1>
                 </div>
               </div>
             </div>
@@ -196,4 +207,4 @@ const main = () => {
   );
 };
 
-export default main;
+export default Main;

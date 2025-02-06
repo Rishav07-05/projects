@@ -1,30 +1,31 @@
-const express = require('express');
-const connectDB = require('./config/db');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
+const postRoutes = require("./routes/postRoutes");
+
 const app = express();
-const bodyParser = require('body-parser')
-const cors = require('cors')
-require('dotenv').config();
 const PORT = process.env.PORT || 5000;
 
-const authRoutes = require('./routes/authRoutes')
 
+// Connect to MongoDB
+connectDB();
 
-
+// Middleware
+app.use(cors());
 app.use(bodyParser.json());
-app.use(cors())
+
+// Routes
+app.use("/auth", authRoutes);
+app.use("/api", postRoutes);
 
 
-
-app.get('/', (req, res) => {
-    res.json({message: "Welcome to the Postify" });
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to Postify!" });
 });
 
-
-
-app.use('/auth' , authRoutes)
-
-
-
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
