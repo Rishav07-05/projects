@@ -3,7 +3,7 @@ import {  useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Createpost = () => {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState("this is ");
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
