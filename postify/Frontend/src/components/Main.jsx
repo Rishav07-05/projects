@@ -62,17 +62,24 @@ const Main = () => {
         >
           POSTIFY
         </h1>
-        <div className="flex justify-center items-center gap-20 border-2 border-zinc-600 p-7 rounded-4xl">
-          <a href="#home">
-            <h1 className="text-2xl text-zinc-100 font-semibold">Home</h1>
-          </a>
-          <a href="#post">
-            <h1 className="text-2xl text-zinc-100 font-semibold">Post</h1>
-          </a>
-          <a href="#contact">
-            <h1 className="text-2xl text-zinc-100 font-semibold">Contact Us</h1>
-          </a>
-        </div>
+        <div className="relative p-[5px] rounded-[20px]">
+  {/* Border Animation Layer */}
+  <div className="absolute inset-0 bg-gradient-to-r from-[lightblue] via-orange-500 to-[crimson] animate-spin-slow rounded-[20px]"></div>
+
+  {/* Navigation Links */}
+  <div className="relative flex justify-center items-center gap-20 bg-[#060606] p-5 rounded-[12px] border-[1px] border-transparent">
+    <a href="#home">
+      <h1 className="text-2xl text-zinc-100 font-semibold">Home</h1>
+    </a>
+    <a href="#post">
+      <h1 className="text-2xl text-zinc-100 font-semibold">Post</h1>
+    </a>
+    <a href="#contact">
+      <h1 className="text-2xl text-zinc-100 font-semibold">Contact Us</h1>
+    </a>
+  </div>
+</div>
+
         <div className="flex items-center px-5 rounded-md">
           <div className="w-[50px] h-[50px] bg-emerald-500 rounded-full">
             <div onClick={toggleProfile} className="cursor-pointer">
@@ -93,13 +100,31 @@ const Main = () => {
         </div>
 
         <div className="text-center">
-          <h1 className="text-center text-5xl mt-10 mb-1 leading-none text-[whitesmoke] font-bold font-serif">
+          <h1 className="text-center text-5xl mt-10 mb-1 leading-none text-[whitesmoke] font-bold font-serif" style={{
+              backgroundImage:
+                "url('https://i.pinimg.com/236x/50/73/3f/50733fe26945d10e7ae1942ffb566aae.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              color: "transparent",
+            }}>
             hello how are u !!!
           </h1>
-          <h1 className="text-center text-5xl mb-8 text-[whitesmoke] font-bold font-serif">
+          <h1 className="text-center text-5xl mb-8 text-[whitesmoke] font-bold font-serif" style={{
+              backgroundImage:
+                "url('https://i.pinimg.com/236x/50/73/3f/50733fe26945d10e7ae1942ffb566aae.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              color: "transparent",
+            }}>
             Want to share something about yourself
           </h1>
-          <p className="text-red-200 text-center">
+          <p className="text-cyan-200 text-center" >
             Best platform to interact A version of instagram...🤯🤯🤯
           </p>
         </div>
@@ -191,7 +216,7 @@ const Main = () => {
           <div className="flex justify-center mt-6">
             <button
               onClick={() => navigate("/posts")}
-              className="px-6 py-3 mb-20 bg-green-500 text-white font-bold rounded-lg hover:bg-green-700 transition"
+              className="px-6 py-3 mb-20 bg-green-500 text-white font-bold rounded-full hover:bg-green-700 transition"
             >
               View More
             </button>
@@ -254,29 +279,29 @@ const Main = () => {
             <div className="flex gap-6 z-100">
               <a
                 href="#"
-                className="flex items-center gap-2 text-emerald-200 hover:text-emerald-400 transition"
+                className="flex items-center gap-2 text-black hover:text-zinc-700 transition"
               >
                 <Instagram size={24} /> Instagram
               </a>
               <a
                 href="#"
-                className="flex items-center gap-2 text-emerald-200 hover:text-emerald-400 transition"
+                className="flex items-center gap-2 text-black hover:text-zinc-700 transition"
               >
                 <Twitter size={24} /> Twitter
               </a>
               <a
                 href="#"
-                className="flex items-center gap-2 text-emerald-200 hover:text-emerald-400 transition"
+                className="flex items-center gap-2 text-black hover:text-zinc-700 transition"
               >
                 <Facebook size={24} /> Facebook
               </a>
             </div>
             <div className="mt-4 text-center z-100">
-              <p className="text-lg ">
-                Phone No: <span className="text-emerald-500">7777777777</span>
+              <p className="text-lg text-[#111] ">
+                Phone No: <span className="text-black">7777777777</span>
               </p>
-              <p className="text-lg">
-                Email: <span className="text-emerald-300">abc@gmail.com</span>
+              <p className="text-lg text-[#111]">
+                Email: <span className="text-black">abc@gmail.com</span>
               </p>
             </div>
           </div>
