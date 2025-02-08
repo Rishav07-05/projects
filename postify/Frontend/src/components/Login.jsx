@@ -13,10 +13,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/auth/login', { email, password });
-      const { token } = response.data;
+      // const { token } = response.data;
 
       // Store the token in localStorage or react context
-      localStorage.setItem('authToken', token);
+      // localStorage.setItem('authToken', token);
       
 
       // Show success toast
@@ -26,7 +26,12 @@ const Login = () => {
       });
 
       // Redirect to the home page
+      if (response.data.success) {
+      localStorage.setItem("authToken", response.data.token); // Save JWT
+      localStorage.setItem("user", JSON.stringify(response.data.user)); // Save user details
       navigate('/main');
+    }
+
     } catch (err) {
       // Show error toast
       toast.error('Invalid email or password', {

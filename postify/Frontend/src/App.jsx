@@ -5,6 +5,8 @@ import Home from "./components/Home";
 import Main from "./components/Main";
 import Createpost from "./components/Createpost";
 import { Toaster } from "react-hot-toast"; 
+import Post from "./components/Post";
+
 
 const App = () => {
   return (
@@ -17,6 +19,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/main" element={<Main />} />
           <Route path="/createpost" element={<Createpost />} />
+          <Route path="/posts" element={< Post />} />
         </Routes>
       </BrowserRouter>
     </div>

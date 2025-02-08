@@ -19,16 +19,16 @@ router.get("/posts", async (req, res) => {
 // Create a new post
 router.post("/posts", async (req, res) => {
   try {
-    const { content, postedBy } = req.body;
+    const { content, image , user } = req.body;
     // console.log(req.body);
 
-    // if (!content || !postedBy) {
-    //   return res
-    //     .status(400)
-    //     .json({ message: "Content and postedBy are required." });
-    // }
+    if (!content || !user || !image) {
+      return res
+        .status(400)
+        .json({ message: "Content, postedBy  and image are required." });
+    }
 
-    const newPost = new Post({ content, postedBy });
+    const newPost = new Post({ content, image , user });
     await newPost.save();
     res.status(201).json(newPost);
   } catch (error) {

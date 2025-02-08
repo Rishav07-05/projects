@@ -8,7 +8,15 @@ const Home = () => {
      
 
       <div className="flex justify-between items-center p-10 relative z-10">
-        <h1 className="text-4xl text-zinc-400 font-secondary">POSTIFY</h1>
+        <h1 className="text-4xl text-zinc-400 font-secondary" style={{
+          backgroundImage: "url('https://i.pinimg.com/736x/ca/44/da/ca44da91bc6b31232d8c6a097cc948dc.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          color: "transparent",
+  }}>POSTIFY</h1>
         <button className="px-9 py-3 rounded-full bg-green-500 border-green-400 font-bold text-zinc-900 text-xl hover:border-green-500 hover:shadow-[0_0_10px_5px_rgba(0,255,0,0.7)] transform transition-all hover:scale-110">
           <Link to="/login">
             Get Started <span className="text-xl">›</span>
@@ -17,13 +25,22 @@ const Home = () => {
       </div>
 
       <div className="p-10 mt-10 relative z-10">
-        <h1 className="text-5xl mb-10 font-dyna text-[lightblue] leading-none ">
+        <h1 className="text-5xl mb-10 font-dyna text-[lightgoldenrodyellow] leading-none ">
           Show the world
         </h1>
-        <h1 className="text-9xl font-dyna font-bold text-[lightgoldenrodyellow] mb-10 leading-none">
+        <h1 className="text-9xl font-dyna font-bold text-[lightgoldenrodyellow] mb-10 leading-none" style={{
+          backgroundImage: "url('https://i.pinimg.com/236x/cd/25/27/cd252739c86d74cb79cb37bae6e9736c.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          color: "transparent",
+  }}>
           through your lens
         </h1>
-        <h1 className="text-4xl font-dyna  text-zinc-400 ">
+        <h1 className="text-4xl font-dyna  text-zinc-400 "
+        >
          - POSTIFY
         </h1>
       </div>
