@@ -19,16 +19,22 @@ const Createpost = () => {
 
   const handleSubmit = async () => {
 
-    const formData = new FormData();
-    formData.append("content", content);
-    formData.append("image", image);
-    formData.append("postedBy", "Rishav"); // Replace with actual username
+  //   const userId = localStorage.getItem("userId");
+  //    if (!userId) {
+  //   console.error("User not logged in");
+  //   return;
+  // }
+
+    // const formData = new FormData();
+    // formData.append("data", content);
+    // if (image) formData.append("image", image);
+    // formData.append("postedBy", userId); 
 
     try {
-      await axios.post("http://localhost:5000/api/posts", formData);
-      console.log(Response.data);
+      await axios.post("http://localhost:5000/api/posts", {content:content});
+     
       
-      navigate("/main"); // Redirect after posting
+      navigate("/main");
     } catch (error) {
       console.error("Error posting:", error);
     }
@@ -59,7 +65,7 @@ const Createpost = () => {
           onClick={handleSubmit}
           className="px-6 py-1 mr-10 border-[2px] border-green-500 bg-green-500 hover:shadow-[0_0_40px_5px_rgba(255,255,0,0.7)] rounded-full text-2xl text-white"
         >
-          Send
+          Post
         </button>
 
         <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />

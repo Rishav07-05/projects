@@ -12,6 +12,7 @@ const Main = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/posts");
+        console.log(response.data);
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -29,6 +30,11 @@ const Main = () => {
     localStorage.removeItem("authToken");
     navigate("/login");
   };
+
+  // useEffect(() => {
+  // console.log(posts)
+  // }, [posts])
+  
 
   return (
     <div className="h-screen w-full">
@@ -98,6 +104,7 @@ const Main = () => {
         {/* Post Cards */}
         <div className="flex flex-wrap justify-start gap-6 p-6">
           {posts.map((post, index) => (
+            
             <div key={index} className="border-2 border-zinc-700 w-[470px] mr-32 rounded-xl">
               {/* Image Section */}
               <div className="h-[350px] w-[450px] bg-[#4b6269] rounded-3xl mx-auto">
@@ -109,8 +116,8 @@ const Main = () => {
               </div>
 
               {/* Text Section */}
-              <div className="h-[150px] w-[450px] text-[lightblue] mx-auto p-4">
-                <p>{}</p>
+              <div className=" text-[lightblue] mx-auto p-4">
+                <p>{post.content}</p>
               </div>
 
               {/* User Info & Date */}

@@ -17,6 +17,7 @@ const Login = () => {
 
       // Store the token in localStorage or react context
       localStorage.setItem('authToken', token);
+      
 
       // Show success toast
       toast.success('Login successful! Redirecting to home...', {

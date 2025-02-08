@@ -19,7 +19,8 @@ router.get("/posts", async (req, res) => {
 // Create a new post
 router.post("/posts", async (req, res) => {
   try {
-    const { content } = req.body;
+    const { content, postedBy } = req.body;
+    // console.log(req.body);
 
     // if (!content || !postedBy) {
     //   return res
@@ -27,7 +28,7 @@ router.post("/posts", async (req, res) => {
     //     .json({ message: "Content and postedBy are required." });
     // }
 
-    const newPost = new Post({ content });
+    const newPost = new Post({ content, postedBy });
     await newPost.save();
     res.status(201).json(newPost);
   } catch (error) {
