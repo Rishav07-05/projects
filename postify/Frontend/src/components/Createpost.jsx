@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {  useNavigate } from "react-router-dom";
 import axios from "axios";
+import { SERVER } from "../config";
 
 const Createpost = () => {
   const [content, setContent] = useState(null);
@@ -32,7 +33,7 @@ const Createpost = () => {
     // formData.append("postedBy", userId); 
 
     try {
-      await axios.post("http://localhost:5000/api/posts", {content:content , image: image , user:user} );
+      await axios.post(`${SERVER}/api/posts`, {content:content , image: image , user:user} );
      
       
       navigate("/main");

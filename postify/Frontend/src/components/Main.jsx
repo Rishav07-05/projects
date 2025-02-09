@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Instagram, Twitter, Facebook } from "lucide-react";
 import axios from "axios";
+import { SERVER } from "../config";
 
 const Main = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -12,7 +13,7 @@ const Main = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/posts");
+        const response = await axios.get(`${SERVER}/api/posts`);
         console.log(response.data);
         setPosts(response.data);
       } catch (error) {
@@ -210,7 +211,7 @@ const Main = () => {
                 <img
                   src={post.image}
                   className="w-full h-full object-cover rounded-3xl"
-                  alt=""
+                  alt="uploaded image"
                 />
               </div>
 

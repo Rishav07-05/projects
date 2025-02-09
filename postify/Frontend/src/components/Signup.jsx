@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { SERVER } from "../config";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
   e.preventDefault();
   try {
-    const url = "http://localhost:5000/auth/signup";
+    const url = `${SERVER}/auth/signup`;
     const response = await axios.post(url, { name, email, password });
 
     if (response.data.success) {
