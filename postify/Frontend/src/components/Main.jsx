@@ -44,41 +44,51 @@ const Main = () => {
   // }, [posts])
 
   return (
-    <div className="h-screen w-full">
+    <div className="h-screen w-full bg-black">
       {/* Header Section */}
       <div className="p-10 flex items-center justify-between fixed top-0 left-0 w-full z-50">
-        <h1
-          className="text-4xl text-zinc-400 font-secondary"
-          style={{
-            backgroundImage:
-              "url('https://i.pinimg.com/736x/ca/44/da/ca44da91bc6b31232d8c6a097cc948dc.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            color: "transparent",
-          }}
-        >
-          POSTIFY
-        </h1>
+        <div className="flex items-center gap-3">
+          <img
+            src="https://i.pinimg.com/236x/41/2b/8e/412b8ed68cdef05482ffe94a59fbbeb3.jpg"
+            height={50}
+            width={50}
+            alt="Postify Logo"
+          />
+          <h1
+            className="text-4xl text-zinc-400 font-secondary"
+            style={{
+              backgroundImage:
+                "url('https://i.pinimg.com/736x/ca/44/da/ca44da91bc6b31232d8c6a097cc948dc.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              color: "transparent",
+            }}
+          >
+            POSTIFY
+          </h1>
+        </div>
         <div className="relative p-[5px] rounded-[20px]">
-  {/* Border Animation Layer */}
-  <div className="absolute inset-0 bg-gradient-to-r from-[lightblue] via-orange-500 to-[crimson] animate-spin-slow rounded-[20px]"></div>
+          {/* Border Animation Layer */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[lightblue] via-orange-500 to-[crimson] animate-spin-slow rounded-[20px]"></div>
 
-  {/* Navigation Links */}
-  <div className="relative flex justify-center items-center gap-20 bg-[#060606] p-5 rounded-[12px] border-[1px] border-transparent">
-    <a href="#home">
-      <h1 className="text-2xl text-zinc-100 font-semibold">Home</h1>
-    </a>
-    <a href="#post">
-      <h1 className="text-2xl text-zinc-100 font-semibold">Post</h1>
-    </a>
-    <a href="#contact">
-      <h1 className="text-2xl text-zinc-100 font-semibold">Contact Us</h1>
-    </a>
-  </div>
-</div>
+          {/* Navigation Links */}
+          <div className="relative flex justify-center items-center gap-20 bg-[#060606] p-5 rounded-[12px] border-[1px] border-transparent">
+            <a href="#home">
+              <h1 className="text-2xl text-zinc-100 font-semibold">Home</h1>
+            </a>
+            <a href="#post">
+              <h1 className="text-2xl text-zinc-100 font-semibold">Post</h1>
+            </a>
+            <a href="#contact">
+              <h1 className="text-2xl text-zinc-100 font-semibold">
+                Contact Us
+              </h1>
+            </a>
+          </div>
+        </div>
 
         <div className="flex items-center px-5 rounded-md">
           <div className="w-[50px] h-[50px] bg-emerald-500 rounded-full">
@@ -100,7 +110,9 @@ const Main = () => {
         </div>
 
         <div className="text-center">
-          <h1 className="text-center text-5xl mt-10 mb-1 leading-none text-[whitesmoke] font-bold font-serif" style={{
+          <h1
+            className="text-center text-5xl mt-10 mb-1 leading-none text-[whitesmoke] font-bold font-serif"
+            style={{
               backgroundImage:
                 "url('https://i.pinimg.com/236x/50/73/3f/50733fe26945d10e7ae1942ffb566aae.jpg')",
               backgroundSize: "cover",
@@ -109,10 +121,13 @@ const Main = () => {
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
               color: "transparent",
-            }}>
+            }}
+          >
             hello how are u !!!
           </h1>
-          <h1 className="text-center text-5xl mb-8 text-[whitesmoke] font-bold font-serif" style={{
+          <h1
+            className="text-center text-5xl mb-8 text-[whitesmoke] font-bold font-serif"
+            style={{
               backgroundImage:
                 "url('https://i.pinimg.com/236x/50/73/3f/50733fe26945d10e7ae1942ffb566aae.jpg')",
               backgroundSize: "cover",
@@ -121,10 +136,11 @@ const Main = () => {
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
               color: "transparent",
-            }}>
+            }}
+          >
             Want to share something about yourself
           </h1>
-          <p className="text-cyan-200 text-center" >
+          <p className="text-cyan-200 text-center">
             Best platform to interact A version of instagram...🤯🤯🤯
           </p>
         </div>
@@ -156,10 +172,18 @@ const Main = () => {
         </div>
       </div>
 
+      {/* animated section */}
+
+      <div className="w-full mt-10 bg-black py-24 overflow-hidden">
+        <div className="w-full h-[400px] bg-[lightblue] rounded-t-4xl">
+          <h1 className="text-center text-[crimson] py-24 font-silkscreen font-extrabold text-[116px] leading-none">UNLEASH YOUR THOUGHTS</h1>
+        </div>
+      </div>
+
       {/* Post Section */}
       <div id="post" className="w-full bg-[#060606]">
         <div
-          className="text-center font-dancing font-extrabold text-5xl mt-[117px] ml-10 mb-10 "
+          className="text-center font-dancing  font-extrabold text-5xl py-14  ml-10 mb-10  "
           style={{
             backgroundImage:
               "url('https://i.pinimg.com/736x/d2/4c/45/d24c45c2f757b974f3008d171cd2608f.jpg')",
@@ -226,45 +250,80 @@ const Main = () => {
 
       {/* Remarks Page */}
       <div className="w-full h-[70%] bg-[#060606] flex flex-col">
-  {[
-    { name: "Karl", img: "https://i.pinimg.com/474x/22/b8/8d/22b88d4ace6013b2dda0202b43972a5b.jpg" , work: "Finance" },
-    { name: "Max", img: "https://i.pinimg.com/236x/67/b1/d9/67b1d9b1f0f0001f99bba671c0c19a5e.jpg" , work: "Designing" },
-    { name: "Henry", img: "https://i.pinimg.com/236x/f2/91/dd/f291dd33b9eccc32dfbe8d3407ad59fa.jpg" , work: "Craft" },
-    { name: "Elie", img: "https://i.pinimg.com/474x/79/4a/a1/794aa105a40a039cf9fb3d222de9f85d.jpg" , work: "Login" },
-    { name: "Rockzz", img: "https://i.pinimg.com/736x/64/d2/51/64d251e8d1a9dc544cefe64b51b6b4c3.jpg" , work: "Logout" },
-    { name: "Elizabeth", img: "https://i.pinimg.com/474x/cc/ed/40/cced40902dd7ce25f0e74ceb8521eaa4.jpg" , work: "Pictures craft" },
-    { name: "Weekend", img: "https://i.pinimg.com/236x/99/94/ec/9994ec6ed29ef0ec854a59d9f6413159.jpg" , work: "Social access" }
-  ].map((person, index) => (
-    <div
-      key={index}
-      className="w-full border-t border-zinc-400 py-7 flex items-center"
-    >
-      {/* Profile Image */}
-      <img
-        src={person.img}
-        className="w-[50px] h-[50px] rounded-full ml-10"
-        alt=""
-      />
+        {[
+          {
+            name: "Karl",
+            img: "https://i.pinimg.com/474x/22/b8/8d/22b88d4ace6013b2dda0202b43972a5b.jpg",
+            work: "Finance",
+          },
+          {
+            name: "Max",
+            img: "https://i.pinimg.com/236x/67/b1/d9/67b1d9b1f0f0001f99bba671c0c19a5e.jpg",
+            work: "Designing",
+          },
+          {
+            name: "Henry",
+            img: "https://i.pinimg.com/236x/f2/91/dd/f291dd33b9eccc32dfbe8d3407ad59fa.jpg",
+            work: "Craft",
+          },
+          {
+            name: "Elie",
+            img: "https://i.pinimg.com/474x/79/4a/a1/794aa105a40a039cf9fb3d222de9f85d.jpg",
+            work: "Login",
+          },
+          {
+            name: "Rockzz",
+            img: "https://i.pinimg.com/736x/64/d2/51/64d251e8d1a9dc544cefe64b51b6b4c3.jpg",
+            work: "Logout",
+          },
+          {
+            name: "Elizabeth",
+            img: "https://i.pinimg.com/474x/cc/ed/40/cced40902dd7ce25f0e74ceb8521eaa4.jpg",
+            work: "Pictures craft",
+          },
+          {
+            name: "Weekend",
+            img: "https://i.pinimg.com/236x/99/94/ec/9994ec6ed29ef0ec854a59d9f6413159.jpg",
+            work: "Social access",
+          },
+        ].map((person, index) => (
+          <div
+            key={index}
+            className="w-full border-t border-zinc-400 py-7 flex items-center"
+          >
+            {/* Profile Image */}
+            <img
+              src={person.img}
+              className="w-[50px] h-[50px] rounded-full ml-10"
+              alt=""
+            />
 
-      {/* Name */}
-      <h1 className="text-4xl text-[#eb5f35] font-bold font-dancing ml-10" >
-         <span style={{
-            backgroundImage:
-              "url('https://i.pinimg.com/236x/9e/18/0f/9e180f8d8d60107bd9a4b4aea2e965f4.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            color: "transparent",
-          }}>{person.name}</span>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span className="text-[lightblue]">work ideas by: <span className="text-white" >{person.work}</span></span>
-      </h1>
-    </div>
-  ))}
+            {/* Name */}
+            <h1 className="text-4xl text-[#eb5f35] font-bold font-dancing ml-10">
+              <span
+                style={{
+                  backgroundImage:
+                    "url('https://i.pinimg.com/236x/9e/18/0f/9e180f8d8d60107bd9a4b4aea2e965f4.jpg')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  color: "transparent",
+                }}
+              >
+                {person.name}
+              </span>{" "}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
+              <span className="text-[lightblue]">
+                work ideas by: <span className="text-white">{person.work}</span>
+              </span>
+            </h1>
+          </div>
+        ))}
 
-  <div className="w-full border-t border-zinc-400 py-4 flex items-center"></div>
-</div>
-
+        <div className="w-full border-t border-zinc-400 py-4 flex items-center"></div>
+      </div>
 
       {/* Contact Section */}
       <div className="w-full bg-[#060606] overflow-hidden">
@@ -272,7 +331,7 @@ const Main = () => {
           id="contact"
           className="w-[98%] ml-5 rounded-t-4xl h-[400px] bg-orange-800 text-amber-200 py-10 border-t border-zinc-700"
         >
-          <h1 className="text-4xl text-black font-secondary ml-6 absolute z-100" >
+          <h1 className="text-4xl text-black font-secondary ml-6 absolute z-100">
             POSTIFY
           </h1>
           <div className="max-w-4xl mt-44 flex flex-col items-center ">
@@ -329,6 +388,11 @@ const Main = () => {
           ✖
         </button>
         <div className="flex flex-col items-center mt-20 space-y-4">
+          <div className="h-[100px] w-[100px] rounded-full bg-emerald-500 mt-14">
+            <h1 className="text-center mt-[26px] font-extrabold text-5xl">
+              {userInitial}
+            </h1>
+          </div>
           <h1 className="text-center mt-20 text-2xl font-semibold">
             <button className="px-9 py-3 rounded-full bg-green-500 border-green-400 font-bold text-zinc-900 text-xl hover:border-green-500 hover:shadow-[0_0_10px_5px_rgba(0,255,0,0.7)] transform transition-all hover:scale-110">
               My Post

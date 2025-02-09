@@ -4,25 +4,39 @@ import "../index.css";
 const Home = () => {
   return (
     <div className="h-screen w-full bg-black overflow-hidden relative">
-      {/* Background Image */}
      
 
       <div className="flex justify-between items-center p-10 relative z-10">
-        <h1 className="text-4xl text-zinc-400 font-secondary" style={{
-          backgroundImage: "url('https://i.pinimg.com/736x/ca/44/da/ca44da91bc6b31232d8c6a097cc948dc.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          WebkitBackgroundClip: "text",
-          backgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          color: "transparent",
-  }}>POSTIFY</h1>
-        <button className="px-9 py-3 rounded-full bg-green-500 border-green-400 font-bold text-zinc-900 text-xl hover:border-green-500 hover:shadow-[0_0_10px_5px_rgba(0,255,0,0.7)] transform transition-all hover:scale-110">
-          <Link to="/login">
-            Get Started <span className="text-xl">›</span>
-          </Link>
-        </button>
-      </div>
+  <div className="flex items-center gap-3">
+    <img
+      src="https://i.pinimg.com/236x/41/2b/8e/412b8ed68cdef05482ffe94a59fbbeb3.jpg"
+      height={50}
+      width={50}
+      alt="Postify Logo"
+    />
+    <h1
+      className="text-4xl text-zinc-400 font-secondary"
+      style={{
+        backgroundImage:
+          "url('https://i.pinimg.com/736x/ca/44/da/ca44da91bc6b31232d8c6a097cc948dc.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        WebkitBackgroundClip: "text",
+        backgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        color: "transparent",
+      }}
+    >
+      POSTIFY
+    </h1>
+  </div>
+  <button className="px-9 py-3 rounded-full bg-green-500 border-green-400 font-bold text-zinc-900 text-xl hover:border-green-500 hover:shadow-[0_0_10px_5px_rgba(0,255,0,0.7)] transform transition-all hover:scale-110">
+    <Link to="/login">
+      Get Started <span className="text-xl">›</span>
+    </Link>
+  </button>
+</div>
+
 
       <div className="p-10 mt-10 relative z-10">
         <h1 className="text-5xl mb-10 font-dyna text-[lightgoldenrodyellow] leading-none ">
