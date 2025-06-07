@@ -1,9 +1,13 @@
 import Navbar from "./components/Navbar";
 import Marquee from "./components/Marquee";
-import VanillaTilt from "vanilla-tilt";
-import { useEffect, useRef } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import Background3D from "./components/Background3D";
+import Footer from "./components/Footer";
+import { SignInButton, SignUpButton } from "@clerk/clerk-react";
+
+
+
+
 
 // import gsap from "gsap";
 
@@ -22,20 +26,7 @@ const codeSnippets = [
 
 
 const Home = () => {
-  const tiltRef = useRef(null);
 
-  useEffect(() => {
-    // Vanilla Tilt
-    if (tiltRef.current) {
-      VanillaTilt.init(tiltRef.current, {
-        max: 20,
-        speed: 800,
-        scale: 1.08,
-        glare: false,
-        reverse: true,
-      });
-    }
-  }, []);
 
 
   return (
@@ -44,15 +35,14 @@ const Home = () => {
 
       {/* first page */}
       <div className="relative w-full h-screen overflow-hidden">
-        {/* 3D blob background - positioned absolutely within this container */}
+        <div className="absolute inset-0 z-0 pointer-events-auto">
+          <Background3D />
+        </div>
 
-        {/* Content container with higher z-index */}
-        <div className="relative z-10 w-full min-h-screen flex flex-col md:flex-row justify-between items-center px-6 md:px-12 py-20">
-          <div className="absolute inset-0 z-0">
-            <Background3D />
-          </div>
-          <div className="relative z-10 w-full md:w-1/2 flex justify-center md:justify-start">
-            <pre className="text-[14px] md:text-2xl font-mono text-orange-300 glow-code leading-relaxed whitespace-pre-wrap text-left h-[120px]">
+        <div className="relative z-10 w-full h-full flex flex-col md:flex-row justify-between items-center px-4 sm:px-6 md:px-12 py-16 md:py-20">
+          {/* Code block (left) */}
+          <div className="w-full md:w-1/2 flex justify-center md:justify-start mb-8 md:mb-0">
+            <pre className="text-sm sm:text-base md:text-xl lg:text-2xl font-mono text-[#c9109e] glow-code leading-relaxed whitespace-pre-wrap text-left h-[100px] sm:h-[120px]">
               <Typewriter
                 words={codeSnippets}
                 loop={0}
@@ -65,32 +55,69 @@ const Home = () => {
             </pre>
           </div>
 
-          <div className="relative z-20 w-full md:w-1/2 text-white text-center md:text-left mt-10 md:mt-0">
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-10 font-bebas tracking-wider">
-              <div className="mb-6">
-                <span className="text-[#9b2038]">Refactor.</span>{" "}
+          {/* Hero Text (right) */}
+          <div className="w-full md:w-1/2 text-white text-center md:text-left">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 md:mb-10 font-bebas tracking-wider">
+              <div className="mb-4 md:mb-6">
+                <span className="text-[#da3939]">Refactor.</span>{" "}
                 <span className="text-[lightblue]">Reimagine.</span>{" "}
-                <span className="text-[#278569]">Rebuild</span> <br />{" "}
+                <span className="text-[#278569]">Rebuild</span>
               </div>
               <span className="text-transparent font-doto font-extrabold bg-clip-text bg-gradient-to-b from-yellow-400 to-pink-600">
                 Refact AI
               </span>
             </h1>
-            <p className="text-lg text-[#f3b77b] mb-10 font-spacegrotesk">
+            <p className="text-base sm:text-lg text-[#f3b77b] mb-6 md:mb-10 font-spacegrotesk">
               Your intelligent coding assistant – debug, refactor, and write
               better code with ease.
             </p>
 
-            <div className="flex justify-center md:justify-start space-x-4">
-              <button className="relative overflow-hidden group bg-white text-black px-6 py-2 rounded-lg font-semibold transition duration-300 hover:border-none ease-in-out hover:text-white hover:bg-black border border-white">
-                <span className="relative z-10">Login</span>
-                <span className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-pink-500 opacity-0 group-hover:opacity-100 transition duration-500"></span>
-              </button>
+            <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
+              <SignInButton mode="redirect" forceRedirectUrl="/dashboard">
+                <button className="relative overflow-hidden group bg-transparent text-white px-6 py-2 sm:px-8 sm:py-3 rounded-full font-medium transition-all duration-500 ease-in-out hover:text-white border-2 border-white hover:border-transparent">
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    <svg
+                      className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1 duration-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                      ></path>
+                    </svg>
+                    Login
+                  </span>
+                  <span className="absolute inset-0 bg-gradient-to-t from-yellow-400 via-orange-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-all duration-700 transform group-hover:scale-110"></span>
+                </button>
+              </SignInButton>
 
-              <button className="relative overflow-hidden group border border-white px-6 py-2 rounded-lg text-white font-semibold transition duration-300 ease-in-out hover:text-black hover:bg-white">
-                <span className="relative z-10">Sign Up</span>
-                <span className="absolute inset-0 bg-white group-hover:scale-125 opacity-0 group-hover:opacity-10 transition duration-500 rounded-lg"></span>
-              </button>
+              <SignUpButton mode="redirect" forceRedirectUrl="/">
+                <button className="relative overflow-hidden group bg-transparent text-white px-6 py-2 sm:px-8 sm:py-3 rounded-full font-medium transition-all duration-500 ease-in-out hover:text-black hover:bg-green-500 border-2 border-white hover:border-transparent">
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    <svg
+                      className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1 duration-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                      ></path>
+                    </svg>
+                    Sign Up
+                  </span>
+                  <span className="absolute inset-0 bg-white group-hover:scale-125 opacity-0 group-hover:opacity-10 transition-all duration-700 rounded-full"></span>
+                </button>
+              </SignUpButton>
             </div>
           </div>
         </div>
@@ -416,6 +443,8 @@ const Home = () => {
             </div>
           ))}
         </div>
+
+        <Footer />
       </div>
     </div>
   );
