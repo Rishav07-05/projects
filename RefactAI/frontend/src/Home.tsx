@@ -1,42 +1,97 @@
 import Navbar from "./components/Navbar";
-import hero from "./assets/hero.jpg";
 import Marquee from "./components/Marquee";
+import VanillaTilt from "vanilla-tilt";
+import { useEffect, useRef } from "react";
+import { Typewriter } from "react-simple-typewriter";
+import Background3D from "./components/Background3D";
+
+// import gsap from "gsap";
+
+
+const codeSnippets = [
+  `// Analyzing time complexity\nfunction binarySearch(arr, target) {\n  let left = 0, right = arr.length - 1;\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n    if (arr[mid] === target) return mid;\n    arr[mid] < target ? left = mid + 1 : right = mid - 1;\n  }\n  return -1;\n}`,
+
+  `// Optimizing space complexity\nfunction removeDuplicates(arr) {\n  return [...new Set(arr)];\n}`,
+
+  `// AI suggestion: Replace loop with map()\nconst squared = arr.map(x => x * x);`,
+
+  `// Refactor complete \nconst sum = (a, b) => a + b;\nconsole.log(sum(5, 10));`,
+];
+
+
+
 
 const Home = () => {
+  const tiltRef = useRef(null);
+
+  useEffect(() => {
+    // Vanilla Tilt
+    if (tiltRef.current) {
+      VanillaTilt.init(tiltRef.current, {
+        max: 20,
+        speed: 800,
+        scale: 1.08,
+        glare: false,
+        reverse: true,
+      });
+    }
+  }, []);
+
+
   return (
     <div className="min-h-screen w-full bg-black">
       <Navbar />
 
       {/* first page */}
-      <div className="flex flex-col md:flex-row justify-between items-center px-6 md:px-12 py-10 gap-10">
-        {/* Hero Image */}
-        <div className="w-full md:w-1/2 flex justify-center">
-          <img
-            src={hero}
-            alt="hero"
-            className="rotate-y-180 max-w-full h-auto rounded-xl shadow-xl"
-          />
-        </div>
+      <div className="relative w-full h-screen overflow-hidden">
+        {/* 3D blob background - positioned absolutely within this container */}
 
-        {/* Text Content */}
-        <div className="w-full md:w-1/2 text-white text-center md:text-left">
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
-            Refactor. Reimagine. Rebuild{" "}
-            <span className="text-transparent font-moon font-extralight bg-clip-text bg-gradient-to-b from-yellow-400 to-pink-600">
-              ⚡Refact AI
-            </span>
-          </h1>
-          <p className="text-lg text-gray-300 mb-6">
-            Your intelligent coding assistant – debug, refactor, and write
-            better code with ease.
-          </p>
-          <div className="space-x-4">
-            <button className="bg-white text-black px-6 py-2 rounded-lg hover:bg-transparent hover:text-white hover:border transition">
-              Login
-            </button>
-            <button className="border border-white px-6 py-2 rounded-lg text-white hover:bg-white hover:text-black transition">
-              Sign Up
-            </button>
+        {/* Content container with higher z-index */}
+        <div className="relative z-10 w-full min-h-screen flex flex-col md:flex-row justify-between items-center px-6 md:px-12 py-20">
+          <div className="absolute inset-0 z-0">
+            <Background3D />
+          </div>
+          <div className="relative z-10 w-full md:w-1/2 flex justify-center md:justify-start">
+            <pre className="text-[14px] md:text-2xl font-mono text-orange-300 glow-code leading-relaxed whitespace-pre-wrap text-left h-[120px]">
+              <Typewriter
+                words={codeSnippets}
+                loop={0}
+                cursor
+                cursorStyle="_"
+                typeSpeed={50}
+                deleteSpeed={30}
+                delaySpeed={2000}
+              />
+            </pre>
+          </div>
+
+          <div className="relative z-20 w-full md:w-1/2 text-white text-center md:text-left mt-10 md:mt-0">
+            <h1 className="text-4xl md:text-6xl font-extrabold mb-10 font-bebas tracking-wider">
+              <div className="mb-6">
+                <span className="text-[#9b2038]">Refactor.</span>{" "}
+                <span className="text-[lightblue]">Reimagine.</span>{" "}
+                <span className="text-[#278569]">Rebuild</span> <br />{" "}
+              </div>
+              <span className="text-transparent font-doto font-extrabold bg-clip-text bg-gradient-to-b from-yellow-400 to-pink-600">
+                Refact AI
+              </span>
+            </h1>
+            <p className="text-lg text-[#f3b77b] mb-10 font-spacegrotesk">
+              Your intelligent coding assistant – debug, refactor, and write
+              better code with ease.
+            </p>
+
+            <div className="flex justify-center md:justify-start space-x-4">
+              <button className="relative overflow-hidden group bg-white text-black px-6 py-2 rounded-lg font-semibold transition duration-300 hover:border-none ease-in-out hover:text-white hover:bg-black border border-white">
+                <span className="relative z-10">Login</span>
+                <span className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-pink-500 opacity-0 group-hover:opacity-100 transition duration-500"></span>
+              </button>
+
+              <button className="relative overflow-hidden group border border-white px-6 py-2 rounded-lg text-white font-semibold transition duration-300 ease-in-out hover:text-black hover:bg-white">
+                <span className="relative z-10">Sign Up</span>
+                <span className="absolute inset-0 bg-white group-hover:scale-125 opacity-0 group-hover:opacity-10 transition duration-500 rounded-lg"></span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -46,9 +101,9 @@ const Home = () => {
 
       {/* second page */}
       <div className="min-h-screen w-full bg-black px-6 py-24">
-        <h2 className="text-white text-center text-4xl md:text-5xl font-extrabold leading-snug tracking-tight mb-16">
+        <h2 className="text-white text-center text-4xl md:text-5xl font-extrabold font-bebas leading-snug tracking-wider mb-16">
           How{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-b from-yellow-400 to-pink-600 font-moon font-extralight">
+          <span className="text-transparent bg-clip-text bg-gradient-to-b from-yellow-400 to-pink-600 font-doto font-extrabold">
             ⚡Refact AI
           </span>{" "}
           Supercharges Your Workflow
@@ -104,18 +159,17 @@ const Home = () => {
                 <div className="text-4xl font-bold mb-4 text-white/50">
                   Step {item.step}
                 </div>
-                <h3 className="text-2xl font-semibold mb-3 text-white">
+                <h3 className="text-2xl font-light mb-3 font-bebas tracking-wide text-white">
                   {item.title}
                 </h3>
-                <p className="text-gray-300">{item.desc}</p>
+                <p className="text-gray-300 font-spacegrotesk">{item.desc}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-
-      {/* Integrations Section  */}
+      {/* Integrations Section && footer section  */}
       <div className="min-h-screen w-full bg-black px-6 py-24">
         <h2 className="text-white text-center text-4xl md:text-5xl font-extrabold leading-snug tracking-tight mb-4">
           Works With Your Favorite{" "}
@@ -362,16 +416,7 @@ const Home = () => {
             </div>
           ))}
         </div>
-
-        
-
-      
-        
-        
-
       </div>
-
-          
     </div>
   );
 };
