@@ -73,7 +73,7 @@ const Home = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
-              <SignInButton mode="redirect" forceRedirectUrl="/dashboard">
+              <SignInButton mode="redirect" forceRedirectUrl="/dashboard" >
                 <button className="relative overflow-hidden group bg-transparent text-white px-6 py-2 sm:px-8 sm:py-3 rounded-full font-medium transition-all duration-500 ease-in-out hover:text-white border-2 border-white hover:border-transparent">
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     <svg
@@ -96,7 +96,7 @@ const Home = () => {
                 </button>
               </SignInButton>
 
-              <SignUpButton mode="redirect" forceRedirectUrl="/">
+              <SignUpButton mode="redirect" forceRedirectUrl="/dashboard">
                 <button className="relative overflow-hidden group bg-transparent text-white px-6 py-2 sm:px-8 sm:py-3 rounded-full font-medium transition-all duration-500 ease-in-out hover:text-black hover:bg-green-500 border-2 border-white hover:border-transparent">
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     <svg

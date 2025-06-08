@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.31.6",
+    "@monaco-editor/react": "^4.7.0",
     "@react-three/drei": "^10.1.2",
     "@react-three/fiber": "^9.1.2",
     "@tailwindcss/vite": "^4.1.7",
@@ -19,7 +20,9 @@
     "framer-motion": "^12.15.0",
     "gsap": "^3.13.0",
     "react": "^19.1.0",
+    "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.1.0",
+    "react-hot-toast": "^2.5.2",
     "react-router-dom": "^7.6.1",
     "react-simple-typewriter": "^5.0.1",
     "three": "^0.177.0",
@@ -27,6 +30,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@types/chart.js": "^2.9.41",
+    "@types/esprima": "^4.0.6",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
