@@ -8,6 +8,7 @@ import {
 } from "@clerk/clerk-react";
 import { useUser } from "@clerk/clerk-react";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const languages = [
   { value: "javascript", label: "JavaScript" },
@@ -35,6 +36,7 @@ const Compiler = () => {
   const [complexityData, setComplexityData] = useState(null);
   const [aiAnalysis, setAiAnalysis] = useState(null);
   const [activeTab, setActiveTab] = useState("complexity");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const shownToast = useRef(false);
   const { isSignedIn, user } = useUser();
 
@@ -130,38 +132,140 @@ const Compiler = () => {
     return descriptions[notation] || "Unknown complexity";
   };
 
-  const analyzeWithAI = () => {
-    toast.promise(
-      new Promise((resolve) => {
-        setTimeout(() => {
-          // Mock AI analysis
-          const analysis = {
-            optimizedCode: code.replace(
-              /for\s*\(.*\)/,
-              "// Optimized loop suggestion"
-            ),
-            suggestions: [
-              "Consider using memoization to optimize performance",
-              "This function could be broken into smaller, more maintainable pieces",
-              "Potential edge case not handled in the input validation",
-            ],
-            complexity: detectComplexity(code),
-            score: Math.floor(Math.random() * 50) + 50,
-          };
-          resolve(analysis);
-        }, 2000);
-      }),
-      {
-        loading: "AI is analyzing your code...",
-        success: (data) => {
-          setAiAnalysis(data);
-          setActiveTab("ai");
-          return "AI analysis complete!";
-        },
-        error: "AI analysis failed",
-      }
-    );
-  };
+ const analyzeWithAI = async () => {
+   setIsAnalyzing(true);
+   toast.promise(
+     new Promise(async (resolve, reject) => {
+       try {
+         // Check if API key exists
+         if (!import.meta.env.VITE_OPENAI_KEY) {
+           throw new Error("OpenAI API key is missing");
+         }
+
+         const response = await axios.post(
+           "https://openrouter.ai/api/v1/chat/completions",
+           {
+             model: "openai/gpt-3.5-turbo", // Updated to GPT-4o
+             messages: [
+               {
+                 role: "system",
+                 content: `You are an expert code reviewer. Analyze the provided code for:
+1. Time and space complexity (using Big O notation)
+2. Code quality issues
+3. Optimization opportunities
+4. Best practices violations
+5. Potential bugs or edge cases
+
+Return a JSON object with this structure:
+{
+  "optimizedCode": "The optimized version of the code",
+  "timeComplexity": "Time complexity in Big O notation with brief explanation",
+  "spaceComplexity": "Space complexity in Big O notation with brief explanation",
+  "suggestions": ["array", "of", "specific", "suggestions"],
+  "score": 0-100, // code quality score
+  "summary": "Brief overall assessment",
+  "potentialBugs": ["array", "of", "potential", "bugs"],
+  "bestPractices": ["array", "of", "best", "practices", "to", "follow"]
+}`,
+               },
+               {
+                 role: "user",
+                 content: `Analyze this ${language} code for complexity and quality:\n\n${code}`,
+               },
+             ],
+             response_format: { type: "json_object" },
+             max_tokens: 2000, // Increased for more detailed analysis
+             temperature: 0.2, // Lower temperature for more deterministic output
+           },
+           {
+             headers: {
+               Authorization: `Bearer ${import.meta.env.VITE_OPENAI_KEY}`,
+               "HTTP-Referer": window.location.href,
+               "X-Title": "Code Complexity Analyzer",
+               "Content-Type": "application/json",
+             },
+             timeout: 30000, // 30 seconds timeout
+           }
+         );
+
+         if (!response.data.choices?.[0]?.message?.content) {
+           throw new Error("Invalid response structure from API");
+         }
+
+         const analysis = response.data.choices[0].message.content;
+         let parsedAnalysis;
+
+         try {
+           parsedAnalysis = JSON.parse(analysis);
+         } catch (e) {
+           console.error("Failed to parse AI response:", e);
+           // Try to extract JSON from markdown if present
+           const jsonMatch = analysis.match(/```json\n([\s\S]*?)\n```/);
+           if (jsonMatch) {
+             parsedAnalysis = JSON.parse(jsonMatch[1]);
+           } else {
+             throw new Error("AI returned non-JSON response");
+           }
+         }
+
+         // Validate the response structure
+         const requiredFields = [
+           "optimizedCode",
+           "timeComplexity",
+           "spaceComplexity",
+           "suggestions",
+           "score",
+           "summary",
+         ];
+
+         for (const field of requiredFields) {
+           if (!(field in parsedAnalysis)) {
+             throw new Error(`Missing required field in AI response: ${field}`);
+           }
+         }
+
+         // Set default values for optional fields if not provided
+         parsedAnalysis.potentialBugs = parsedAnalysis.potentialBugs || [];
+         parsedAnalysis.bestPractices = parsedAnalysis.bestPractices || [];
+
+         resolve(parsedAnalysis);
+       } catch (error) {
+         console.error("AI analysis error:", error);
+
+         // Provide a fallback analysis if the API fails
+         const fallbackAnalysis = {
+           optimizedCode: code,
+           timeComplexity: "Unknown (analysis failed)",
+           spaceComplexity: "Unknown (analysis failed)",
+           suggestions: [
+             "Failed to get AI analysis. Please check your API key and try again.",
+             error.message,
+           ],
+           score: 0,
+           summary: "Analysis failed: " + error.message,
+           potentialBugs: [],
+           bestPractices: [],
+         };
+
+         resolve(fallbackAnalysis);
+       } finally {
+         setIsAnalyzing(false);
+       }
+     }),
+     {
+       loading: "AI is analyzing your code...",
+       success: (data) => {
+         setAiAnalysis(data);
+         setActiveTab("ai");
+         return data.summary || "AI analysis complete!";
+       },
+       error: (err) => {
+         console.error(err);
+         return "AI analysis failed. Please try again.";
+       },
+     }
+   );
+ };
 
   return (
     <>
@@ -170,19 +274,19 @@ const Compiler = () => {
       </SignedOut>
 
       <SignedIn>
-        <div className="h-screen w-full bg-black text-[lightblue] relative overflow-hidden">
+        <div className="h-screen w-full bg-black  p-32 relative overflow-hidden">
           <div className="absolute top-4 right-4 z-50">
             <UserButton afterSignOutUrl="/" />
           </div>
 
-          <div className="h-full w-full flex p-4 gap-4">
+          <div className="glow-border relative h-full w-full rounded-2xl p-6 gap-4 bg-transparent border-2  flex overflow-hidden">
             {/* Editor Column (60%) */}
             <div className="w-[60%] flex flex-col">
               <div className="flex justify-between items-center mb-4">
                 <select
                   value={language}
                   onChange={(e) => setLanguage(e.target.value)}
-                  className="bg-gray-800 text-lightblue border border-gray-700 rounded px-4 py-2"
+                  className="bg-gray-600 text-white rounded px-4 py-2"
                 >
                   {languages.map((lang) => (
                     <option key={lang.value} value={lang.value}>
@@ -195,14 +299,16 @@ const Compiler = () => {
                   <button
                     onClick={analyzeComplexity}
                     className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
+                    disabled={isAnalyzing}
                   >
                     Analyze Complexity
                   </button>
                   <button
                     onClick={analyzeWithAI}
                     className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition-colors"
+                    disabled={isAnalyzing}
                   >
-                    Analyze with AI
+                    {isAnalyzing ? "Analyzing..." : "Analyze with AI"}
                   </button>
                 </div>
               </div>
@@ -315,11 +421,12 @@ const Compiler = () => {
               ) : aiAnalysis ? (
                 <div className="flex-1 bg-gray-900 rounded-lg p-4 border border-gray-700 overflow-auto">
                   <h3 className="text-xl font-bold mb-4">AI Analysis</h3>
+
                   <div className="mb-6">
                     <h4 className="font-semibold mb-2">
                       Code Quality Score: {aiAnalysis.score}/100
                     </h4>
-                    <div className="w-full bg-gray-700 rounded-full h-2.5">
+                    <div className="w-full bg-gray-700 rounded-full h-2.5 mb-2">
                       <div
                         className={`h-2.5 rounded-full ${
                           aiAnalysis.score > 70
@@ -331,18 +438,40 @@ const Compiler = () => {
                         style={{ width: `${aiAnalysis.score}%` }}
                       ></div>
                     </div>
+                    <p className="text-sm text-gray-400">
+                      {aiAnalysis.summary}
+                    </p>
                   </div>
+
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="bg-gray-800 p-3 rounded">
+                      <h4 className="font-semibold mb-2 text-sm">
+                        Time Complexity
+                      </h4>
+                      <p className="font-mono text-sm">
+                        {aiAnalysis.timeComplexity}
+                      </p>
+                    </div>
+                    <div className="bg-gray-800 p-3 rounded">
+                      <h4 className="font-semibold mb-2 text-sm">
+                        Space Complexity
+                      </h4>
+                      <p className="font-mono text-sm">
+                        {aiAnalysis.spaceComplexity}
+                      </p>
+                    </div>
+                  </div>
+
                   <div className="mb-6">
-                    <h4 className="font-semibold mb-2">
-                      Optimized Code Suggestion
-                    </h4>
+                    <h4 className="font-semibold mb-2">Optimized Code</h4>
                     <div className="bg-gray-800 p-3 rounded font-mono text-sm overflow-x-auto">
                       <pre>{aiAnalysis.optimizedCode}</pre>
                     </div>
                   </div>
+
                   <div>
                     <h4 className="font-semibold mb-2">Suggestions</h4>
-                    <ul className="list-disc pl-5 space-y-2">
+                    <ul className="list-disc pl-5 space-y-2 text-sm">
                       {aiAnalysis.suggestions.map((suggestion, i) => (
                         <li key={i}>{suggestion}</li>
                       ))}

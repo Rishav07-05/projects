@@ -1,6 +1,5 @@
 
 import {
-  UserButton,
   SignedIn,
   SignedOut,
   RedirectToSignIn,
@@ -9,10 +8,13 @@ import {
 
 
 
+
+
 import { useUser } from "@clerk/clerk-react";
 import { useRef,  useEffect } from "react";
 import toast from "react-hot-toast";
 import Compiler from "./components/Compiler";
+import Navbar from "./components/Navbar";
 
 
 
@@ -42,9 +44,8 @@ useEffect(() => {
       </SignedOut>
 
       <SignedIn>
-        
-        <Compiler />
-              
+        <Navbar />
+          <Compiler />
       </SignedIn>
     </>
   );
