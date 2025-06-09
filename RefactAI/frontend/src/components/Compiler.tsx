@@ -132,6 +132,8 @@ const Compiler = () => {
     return descriptions[notation] || "Unknown complexity";
   };
 
+  
+
  const analyzeWithAI = async () => {
    setIsAnalyzing(true);
    toast.promise(
@@ -274,22 +276,26 @@ Return a JSON object with this structure:
       </SignedOut>
 
       <SignedIn>
-        <div className="h-screen w-full bg-black  p-32 relative overflow-hidden">
+        <div className="h-screen w-full bg-black p-32 relative overflow-hidden">
           <div className="absolute top-4 right-4 z-50">
             <UserButton afterSignOutUrl="/" />
           </div>
 
-          <div className="glow-border relative h-full w-full rounded-2xl p-6 gap-4 bg-transparent border-2  flex overflow-hidden">
+          <div className="glow-border relative h-full w-full rounded-2xl p-6 gap-4 bg-transparent border-2 border-gray-600  flex overflow-hidden">
             {/* Editor Column (60%) */}
             <div className="w-[60%] flex flex-col">
               <div className="flex justify-between items-center mb-4">
                 <select
                   value={language}
                   onChange={(e) => setLanguage(e.target.value)}
-                  className="bg-gray-600 text-white rounded px-4 py-2"
+                  className="bg-gradient-to-br from-gray-800 to-gray-900 text-white rounded-lg px-4 py-2 border border-gray-600 focus:outline-none transition-all duration-300 shadow-md"
                 >
                   {languages.map((lang) => (
-                    <option key={lang.value} value={lang.value}>
+                    <option
+                      key={lang.value}
+                      value={lang.value}
+                      className="bg-gray-800 text-white"
+                    >
                       {lang.label}
                     </option>
                   ))}
@@ -298,14 +304,14 @@ Return a JSON object with this structure:
                 <div className="flex space-x-4">
                   <button
                     onClick={analyzeComplexity}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
+                    className="bg-gradient-to-br font-bold font-saira from-yellow-400 via-orange-500 to-pink-600 hover:from-yellow-500 hover:via-red-500 hover:to-pink-700 text-white px-6 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:scale-[1.03] active:scale-95"
                     disabled={isAnalyzing}
                   >
                     Analyze Complexity
                   </button>
                   <button
                     onClick={analyzeWithAI}
-                    className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition-colors"
+                    className="bg-gradient-to-br font-bold font-saira from-purple-500 via-fuchsia-600 to-pink-500 hover:from-purple-600 hover:via-fuchsia-700 hover:to-pink-600 text-white px-6 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:scale-[1.03] active:scale-95"
                     disabled={isAnalyzing}
                   >
                     {isAnalyzing ? "Analyzing..." : "Analyze with AI"}
@@ -321,7 +327,7 @@ Return a JSON object with this structure:
                   value={code}
                   onChange={setCode}
                   options={{
-                    minimap: { enabled: false },
+                    minimap: { enabled: true },
                     fontSize: 14,
                     wordWrap: "on",
                     automaticLayout: true,
@@ -332,7 +338,7 @@ Return a JSON object with this structure:
 
             {/* Results Column (40%) */}
             <div className="w-[40%] flex flex-col">
-              <div className="flex border-b border-gray-700 mb-4">
+              <div className="flex border-b border-gray-700 mb-4 ">
                 <button
                   className={`px-4 py-2 ${
                     activeTab === "complexity"
@@ -341,7 +347,9 @@ Return a JSON object with this structure:
                   }`}
                   onClick={() => setActiveTab("complexity")}
                 >
-                  Complexity
+                  <span className="text-[#2460e0] font-medium font-mono">
+                    Complexity
+                  </span>
                 </button>
                 <button
                   className={`px-4 py-2 ${
@@ -349,7 +357,9 @@ Return a JSON object with this structure:
                   }`}
                   onClick={() => setActiveTab("ai")}
                 >
-                  AI Analysis
+                  <span className="text-purple-500 font-medium font-mono">
+                    AI Analysis
+                  </span>
                 </button>
               </div>
 
