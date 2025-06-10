@@ -366,15 +366,15 @@ Return a JSON object with this structure:
               {activeTab === "complexity" ? (
                 complexityData ? (
                   <div className="flex-1 bg-gray-900 rounded-lg p-4 border border-gray-700 overflow-auto">
-                    <h3 className="text-xl font-bold mb-4">
+                    <h3 className="text-xl font-bold mb-4 text-green-500">
                       Complexity Analysis
                     </h3>
                     <div className="grid grid-cols-2 gap-4 mb-6">
                       <div className="bg-gray-800 p-4 rounded">
-                        <h4 className="font-semibold mb-2">
+                        <h4 className="font-semibold mb-2 text-blue-500">
                           Time: {complexityData.timeComplexity.notation}
                         </h4>
-                        <p className="text-sm text-gray-400 mb-3">
+                        <p className="text-sm text-gray-300 mb-3">
                           {complexityData.timeComplexity.description}
                         </p>
                         <div className="h-32 bg-gray-700 rounded flex items-end justify-center space-x-2">
@@ -389,10 +389,10 @@ Return a JSON object with this structure:
                         </div>
                       </div>
                       <div className="bg-gray-800 p-4 rounded">
-                        <h4 className="font-semibold mb-2">
+                        <h4 className="font-semibold mb-2 text-purple-500">
                           Space: {complexityData.spaceComplexity.notation}
                         </h4>
-                        <p className="text-sm text-gray-400 mb-3">
+                        <p className="text-sm text-gray-300 mb-3">
                           {complexityData.spaceComplexity.description}
                         </p>
                         <div className="h-32 bg-gray-700 rounded flex items-end justify-center space-x-2">
@@ -408,13 +408,13 @@ Return a JSON object with this structure:
                       </div>
                     </div>
                     <div className="bg-gray-800 p-4 rounded">
-                      <h4 className="font-semibold mb-2">
+                      <h4 className="font-semibold mb-2 text-orange-500">
                         Complexity Reference
                       </h4>
-                      <ul className="text-sm space-y-2">
+                      <ul className="text-sm space-y-2 ">
                         {complexityTypes.map((type) => (
-                          <li key={type}>
-                            <span className="font-mono">{type}</span>:{" "}
+                          <li className="text-white" key={type}>
+                            <span className="font-mono text-[#ebd15f]">{type}</span>:{" "}
                             {getComplexityDescription(type)}
                           </li>
                         ))}
@@ -430,10 +430,10 @@ Return a JSON object with this structure:
                 )
               ) : aiAnalysis ? (
                 <div className="flex-1 bg-gray-900 rounded-lg p-4 border border-gray-700 overflow-auto">
-                  <h3 className="text-xl font-bold mb-4">AI Analysis</h3>
+                  <h3 className="text-xl font-bold mb-4 text-pink-500">AI Analysis</h3>
 
                   <div className="mb-6">
-                    <h4 className="font-semibold mb-2">
+                    <h4 className="font-semibold mb-2 text-amber-100">
                       Code Quality Score: {aiAnalysis.score}/100
                     </h4>
                     <div className="w-full bg-gray-700 rounded-full h-2.5 mb-2">
@@ -455,32 +455,32 @@ Return a JSON object with this structure:
 
                   <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="bg-gray-800 p-3 rounded">
-                      <h4 className="font-semibold mb-2 text-sm">
+                      <h4 className="font-semibold mb-2 text-sm text-blue-500">
                         Time Complexity
                       </h4>
-                      <p className="font-mono text-sm">
+                      <p className="font-mono text-sm text-blue-200">
                         {aiAnalysis.timeComplexity}
                       </p>
                     </div>
                     <div className="bg-gray-800 p-3 rounded">
-                      <h4 className="font-semibold mb-2 text-sm">
+                      <h4 className="font-semibold mb-2 text-sm text-purple-500">
                         Space Complexity
                       </h4>
-                      <p className="font-mono text-sm">
+                      <p className="font-mono text-sm text-purple-200">
                         {aiAnalysis.spaceComplexity}
                       </p>
                     </div>
                   </div>
 
                   <div className="mb-6">
-                    <h4 className="font-semibold mb-2">Optimized Code</h4>
-                    <div className="bg-gray-800 p-3 rounded font-mono text-sm overflow-x-auto">
+                    <h4 className="font-semibold mb-2 text-green-500">Optimized Code</h4>
+                    <div className="bg-gray-800 text-white p-3 rounded font-mono text-sm overflow-x-auto">
                       <pre>{aiAnalysis.optimizedCode}</pre>
                     </div>
                   </div>
 
                   <div>
-                    <h4 className="font-semibold mb-2">Suggestions</h4>
+                    <h4 className="font-semibold mb-2 text-orange-500">Suggestions</h4>
                     <ul className="list-disc pl-5 space-y-2 text-sm">
                       {aiAnalysis.suggestions.map((suggestion, i) => (
                         <li key={i}>{suggestion}</li>
