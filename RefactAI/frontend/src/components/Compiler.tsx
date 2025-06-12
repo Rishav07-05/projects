@@ -11,11 +11,11 @@ import toast from "react-hot-toast";
 import axios from "axios";
 
 const languages = [
-  { value: "javascript", label: "JavaScript" },
+  { value: "javascript", label: "JS" },
   { value: "python", label: "Python" },
   { value: "java", label: "Java" },
-  { value: "typescript", label: "TypeScript" },
-  { value: "cpp", label: "C++" },
+  { value: "typescript", label: "TScript" },
+  { value: "c++", label: "C++" },
 ];
 
 const complexityTypes = [
@@ -47,38 +47,79 @@ const Compiler = () => {
     }
   }, [isSignedIn, user]);
 
-  const detectComplexity = (code) => {
-    // Simple complexity detection based on code patterns
-    const lines = code.split("\n");
-    let hasLoops = false;
-    let hasNestedLoops = false;
-    let hasRecursion = false;
-    let hasDivideConquer = false;
+const detectTimeComplexity = (code: string): string => {
+  const lines = code.split("\n");
+  let loopDepth = 0;
+  let maxDepth = 0;
+  let hasRecursion = false;
+  let hasDivideConquer = false;
 
-    lines.forEach((line) => {
-      if (line.match(/for\s*\(|while\s*\(|do\s*{/)) hasLoops = true;
-      if (line.match(/for\s*\(.*for\s*\(|while\s*\(.*while\s*\(/))
-        hasNestedLoops = true;
-      if (line.match(/function\s+\w+\s*\(.*\)\s*{.*\w+\s*\(/))
-        hasRecursion = true;
-      if (line.match(/Math\.log|divide|conquer|split\s*\(/))
-        hasDivideConquer = true;
-    });
+  lines.forEach((line) => {
+    // Count opening loops
+    if (line.match(/for\s*\(|while\s*\(|do\s*{/)) {
+      loopDepth++;
+      maxDepth = Math.max(maxDepth, loopDepth);
+    }
+    // Count closing braces (end of loops)
+    if (line.match(/}/)) {
+      loopDepth = Math.max(0, loopDepth - 1);
+    }
+    // Check for other patterns
+    if (line.match(/function\s+\w+\s*\(.*\)\s*{.*\w+\s*\(/))
+      hasRecursion = true;
+    if (line.match(/Math\.log|divide|conquer|split\s*\(|merge\s*\(/))
+      hasDivideConquer = true;
+  });
 
-    if (hasNestedLoops) return "O(n²)";
-    if (hasDivideConquer) return "O(n log n)";
-    if (hasRecursion) return "O(2^n)";
-    if (hasLoops) return "O(n)";
-    return "O(1)";
-  };
+  // Determine complexity based on loop nesting
+  // if (maxDepth >= 3) return "O(n³)";
+  if (maxDepth >= 2) return "O(n²)";
+  if (hasDivideConquer) return "O(n log n)";
+  if (hasRecursion) return "O(2^n)";
+  if (maxDepth >= 1) return "O(n)";
+  return "O(1)";
+};
+
+ const detectSpaceComplexity = (code: string): string => {
+   const lines = code.split("\n");
+
+   let hasDataStructures = false;
+   let hasRecursiveStructures = false;
+   let hasNestedStructures = false;
+   let hasConstantSpace = true;
+
+   lines.forEach((line) => {
+     if (/new Array|new Set|new Map|\[\s*\.\.\.|{.*:.*}/.test(line)) {
+       hasDataStructures = true;
+       hasConstantSpace = false;
+     }
+
+     if (/this\.\w+\s*=\s*this|\w+\s*:\s*\w+/.test(line)) {
+       hasRecursiveStructures = true;
+     }
+
+     if (/Array\(.*Array|Map\(.*Map|Set\(.*Set/.test(line)) {
+       hasNestedStructures = true;
+     }
+
+     if (/malloc|calloc|new \w+\[\d+\]/.test(line)) {
+       hasConstantSpace = false;
+     }
+   });
+
+   if (hasNestedStructures) return "O(n²)";
+   if (hasRecursiveStructures) return "O(n)";
+   if (hasDataStructures) return "O(n)";
+   return "O(1)";
+ };
+
 
   const analyzeComplexity = () => {
     try {
-      const timeComplexity = detectComplexity(code);
-      const spaceComplexity =
-        code.includes("Array(") || code.includes("new Array") ? "O(n)" : "O(1)";
+      const timeComplexity = detectTimeComplexity(code);
+      const spaceComplexity = detectSpaceComplexity(code);
 
-      const getComplexityValues = (type) => {
+      const getComplexityValues = (type : string) => {
         const baseValues = {
           "O(1)": [1, 1, 1],
           "O(log n)": [1, 3, 5],
@@ -132,143 +173,139 @@ const Compiler = () => {
     return descriptions[notation] || "Unknown complexity";
   };
 
-  
+  const validateAIResponse = (data   ) => {
+    try {
+      if (!data.choices?.[0]?.message?.content) {
+        throw new Error("Invalid response structure from API");
+      }
 
- const analyzeWithAI = async () => {
-   setIsAnalyzing(true);
-   toast.promise(
-     new Promise(async (resolve, reject) => {
-       try {
-         // Check if API key exists
-         if (!import.meta.env.VITE_OPENAI_KEY) {
-           throw new Error("OpenAI API key is missing");
-         }
+      let parsed = JSON.parse(data.choices[0].message.content);
 
-         const response = await axios.post(
-           "https://openrouter.ai/api/v1/chat/completions",
-           {
-             model: "openai/gpt-3.5-turbo", // Updated to GPT-4o
-             messages: [
-               {
-                 role: "system",
-                 content: `You are an expert code reviewer. Analyze the provided code for:
-1. Time and space complexity (using Big O notation)
-2. Code quality issues
-3. Optimization opportunities
-4. Best practices violations
-5. Potential bugs or edge cases
+      // Ensure required fields exist
+      const requiredFields = [
+        "optimizedCode",
+        "timeComplexity",
+        "spaceComplexity",
+        "suggestions",
+        "score",
+        "summary",
+      ];
 
-Return a JSON object with this structure:
+      for (const field of requiredFields) {
+        if (!(field in parsed)) {
+          throw new Error(`Missing required field: ${field}`);
+        }
+      }
+
+      // Set defaults for optional fields
+      parsed.potentialBugs = parsed.potentialBugs || [];
+      parsed.bestPractices = parsed.bestPractices || [];
+      parsed.edgeCases = parsed.edgeCases || [];
+
+      return parsed;
+    } catch (error) {
+      console.error("Validation error:", error);
+      throw error;
+    }
+  };
+
+  const analyzeWithAI = async () => {
+    setIsAnalyzing(true);
+    toast.promise(
+      new Promise(async (resolve, reject) => {
+        try {
+          if (!import.meta.env.VITE_OPENAI_KEY) {
+            throw new Error("OpenAI API key is missing");
+          }
+
+          if (!code.trim()) {
+            throw new Error("Please enter some code to analyze");
+          }
+
+          const response = await axios.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            {
+              model: "openai/gpt-3.5-turbo",
+              messages: [
+                {
+                  role: "system",
+                  content: `[IMPORTANT] Analyze this ${language} code for:
+1. Time/Space complexity (Big O notation)
+2. Optimization opportunities
+3. Code quality issues
+4. Potential bugs
+5. Best practices
+
+Return ONLY valid JSON with this structure:
 {
-  "optimizedCode": "The optimized version of the code",
-  "timeComplexity": "Time complexity in Big O notation with brief explanation",
-  "spaceComplexity": "Space complexity in Big O notation with brief explanation",
-  "suggestions": ["array", "of", "specific", "suggestions"],
-  "score": 0-100, // code quality score
-  "summary": "Brief overall assessment",
-  "potentialBugs": ["array", "of", "potential", "bugs"],
-  "bestPractices": ["array", "of", "best", "practices", "to", "follow"]
+  "optimizedCode": "string",
+  "timeComplexity": "string",
+  "spaceComplexity": "string",
+  "suggestions": ["string"],
+  "score": number,
+  "summary": "string",
+  "potentialBugs": ["string"],
+  "bestPractices": ["string"],
+  "edgeCases": ["string"]
 }`,
-               },
-               {
-                 role: "user",
-                 content: `Analyze this ${language} code for complexity and quality:\n\n${code}`,
-               },
-             ],
-             response_format: { type: "json_object" },
-             max_tokens: 2000, // Increased for more detailed analysis
-             temperature: 0.2, // Lower temperature for more deterministic output
-           },
-           {
-             headers: {
-               Authorization: `Bearer ${import.meta.env.VITE_OPENAI_KEY}`,
-               "HTTP-Referer": window.location.href,
-               "X-Title": "Code Complexity Analyzer",
-               "Content-Type": "application/json",
-             },
-             timeout: 30000, // 30 seconds timeout
-           }
-         );
+                },
+                {
+                  role: "user",
+                  content: code,
+                },
+              ],
+              response_format: { type: "json_object" },
+              max_tokens: 2000,
+              temperature: 0.2,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${import.meta.env.VITE_OPENAI_KEY}`,
+                "Content-Type": "application/json",
+              },
+              timeout: 30000,
+            }
+          );  
 
-         if (!response.data.choices?.[0]?.message?.content) {
-           throw new Error("Invalid response structure from API");
-         }
+          const analysis = validateAIResponse(response.data);
+          resolve(analysis);
+        } catch (error) {
+          console.error("AI analysis error:", error);
+          const fallbackAnalysis = {
+            optimizedCode: code,
+            timeComplexity: "Unknown (analysis failed)",
+            spaceComplexity: "Unknown (analysis failed)",
+            suggestions: [
+              "Failed to get AI analysis. Please check your API key and try again.",
+              error.message,
+            ],
+            score: 0,
+            summary: "Analysis failed: " + error.message,
+            potentialBugs: [],
+            bestPractices: [],
+            edgeCases: [],
+          };
+          resolve(fallbackAnalysis);
+        } finally {
+          setIsAnalyzing(false);
+        }
+      }),
+      {
+        loading: "AI is analyzing your code...",
+        success: (data) => {
+          setAiAnalysis(data);
+          setActiveTab("ai");
+          return data.summary || "AI analysis complete!";
+        },
+        error: (err) => {
+          console.error(err);
+          return "AI analysis failed. Please try again.";
+        },
+      }
+    );
+  };
 
-         const analysis = response.data.choices[0].message.content;
-         let parsedAnalysis;
-
-         try {
-           parsedAnalysis = JSON.parse(analysis);
-         } catch (e) {
-           console.error("Failed to parse AI response:", e);
-           // Try to extract JSON from markdown if present
-           const jsonMatch = analysis.match(/```json\n([\s\S]*?)\n```/);
-           if (jsonMatch) {
-             parsedAnalysis = JSON.parse(jsonMatch[1]);
-           } else {
-             throw new Error("AI returned non-JSON response");
-           }
-         }
-
-         // Validate the response structure
-         const requiredFields = [
-           "optimizedCode",
-           "timeComplexity",
-           "spaceComplexity",
-           "suggestions",
-           "score",
-           "summary",
-         ];
-
-         for (const field of requiredFields) {
-           if (!(field in parsedAnalysis)) {
-             throw new Error(`Missing required field in AI response: ${field}`);
-           }
-         }
-
-         // Set default values for optional fields if not provided
-         parsedAnalysis.potentialBugs = parsedAnalysis.potentialBugs || [];
-         parsedAnalysis.bestPractices = parsedAnalysis.bestPractices || [];
-
-         resolve(parsedAnalysis);
-       } catch (error) {
-         console.error("AI analysis error:", error);
-
-         // Provide a fallback analysis if the API fails
-         const fallbackAnalysis = {
-           optimizedCode: code,
-           timeComplexity: "Unknown (analysis failed)",
-           spaceComplexity: "Unknown (analysis failed)",
-           suggestions: [
-             "Failed to get AI analysis. Please check your API key and try again.",
-             error.message,
-           ],
-           score: 0,
-           summary: "Analysis failed: " + error.message,
-           potentialBugs: [],
-           bestPractices: [],
-         };
-
-         resolve(fallbackAnalysis);
-       } finally {
-         setIsAnalyzing(false);
-       }
-     }),
-     {
-       loading: "AI is analyzing your code...",
-       success: (data) => {
-         setAiAnalysis(data);
-         setActiveTab("ai");
-         return data.summary || "AI analysis complete!";
-       },
-       error: (err) => {
-         console.error(err);
-         return "AI analysis failed. Please try again.";
-       },
-     }
-   );
- };
-
+  // The rest of the component (UI part) remains exactly the same as in your original code
   return (
     <>
       <SignedOut>
@@ -325,7 +362,7 @@ Return a JSON object with this structure:
                   language={language}
                   theme="vs-dark"
                   value={code}
-                  onChange={setCode}
+                  onChange={(value) => setCode(value || "")}
                   options={{
                     minimap: { enabled: true },
                     fontSize: 14,
@@ -414,8 +451,10 @@ Return a JSON object with this structure:
                       <ul className="text-sm space-y-2 ">
                         {complexityTypes.map((type) => (
                           <li className="text-white" key={type}>
-                            <span className="font-mono text-[#ebd15f]">{type}</span>:{" "}
-                            {getComplexityDescription(type)}
+                            <span className="font-mono text-[#ebd15f]">
+                              {type}
+                            </span>
+                            : {getComplexityDescription(type)}
                           </li>
                         ))}
                       </ul>
@@ -430,7 +469,9 @@ Return a JSON object with this structure:
                 )
               ) : aiAnalysis ? (
                 <div className="flex-1 bg-gray-900 rounded-lg p-4 border border-gray-700 overflow-auto">
-                  <h3 className="text-xl font-bold mb-4 text-pink-500">AI Analysis</h3>
+                  <h3 className="text-xl font-bold mb-4 text-pink-500">
+                    AI Analysis
+                  </h3>
 
                   <div className="mb-6">
                     <h4 className="font-semibold mb-2 text-amber-100">
@@ -473,15 +514,19 @@ Return a JSON object with this structure:
                   </div>
 
                   <div className="mb-6">
-                    <h4 className="font-semibold mb-2 text-green-500">Optimized Code</h4>
+                    <h4 className="font-semibold mb-2 text-green-500">
+                      Optimized Code
+                    </h4>
                     <div className="bg-gray-800 text-white p-3 rounded font-mono text-sm overflow-x-auto">
                       <pre>{aiAnalysis.optimizedCode}</pre>
                     </div>
                   </div>
 
                   <div>
-                    <h4 className="font-semibold mb-2 text-orange-500">Suggestions</h4>
-                    <ul className="list-disc pl-5 space-y-2 text-sm">
+                    <h4 className="font-semibold mb-2 text-orange-500">
+                      Suggestions
+                    </h4>
+                    <ul className="list-disc pl-5 space-y-2 text-sm text-green-500">
                       {aiAnalysis.suggestions.map((suggestion, i) => (
                         <li key={i}>{suggestion}</li>
                       ))}
