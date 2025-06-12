@@ -35,7 +35,7 @@ const Dashboard = () => {
   const [optimizedCode, setOptimizedCode] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [language, setLanguage] = useState("javascript");
-  const [analysis, setAnalysis] = useState<AnalysisResult | null>(null);
+  const [analysis, setAnalysis] = useState<AnalysisResult>();
   const [activeTab, setActiveTab] = useState("optimized");
 
   useEffect(() => {
@@ -201,7 +201,7 @@ Return ONLY valid JSON with this structure:
                   </div>
                   <MonacoEditor
                     height="400px"
-                    defaultLanguage={language}
+                    language={language}
                     value={code}
                     theme="vs-dark"
                     onChange={(value) => setCode(value || "")}
@@ -318,7 +318,7 @@ Return ONLY valid JSON with this structure:
                               Time Complexity
                             </p>
                             <p className="font-mono text-emerald-400">
-                              {analysis.timeComplexity}
+                              {analysis && analysis.timeComplexity }
                             </p>
                           </div>
                           <div className="bg-gray-700/50 p-4 rounded-lg">
@@ -326,7 +326,7 @@ Return ONLY valid JSON with this structure:
                               Space Complexity
                             </p>
                             <p className="font-mono text-emerald-400">
-                              {analysis.spaceComplexity}
+                              {analysis && analysis.spaceComplexity}
                             </p>
                           </div>
                         </div>
@@ -337,7 +337,7 @@ Return ONLY valid JSON with this structure:
                           Optimization Suggestions
                         </h3>
                         <ul className="space-y-3">
-                          {analysis.suggestions.map(
+                          {analysis && analysis.suggestions.map(
                             (suggestion: string, i: number) => (
                               <li key={i} className="flex items-start">
                                 <span className="text-emerald-400 mr-2 mt-1">
@@ -352,7 +352,7 @@ Return ONLY valid JSON with this structure:
                         </ul>
                       </div>
 
-                      {analysis.potentialBugs.length > 0 && (
+                      {analysis && analysis.potentialBugs.length > 0 && (
                         <div className="space-y-4">
                           <h3 className="text-lg font-semibold text-rose-400">
                             Potential Bugs
@@ -377,7 +377,7 @@ Return ONLY valid JSON with this structure:
                           Best Practices
                         </h3>
                         <ul className="space-y-3">
-                          {analysis.bestPractices.map(
+                          {analysis && analysis.bestPractices.map(
                             (practice: string, i: number) => (
                               <li key={i} className="flex items-start">
                                 <span className="text-indigo-400 mr-2 mt-1">
@@ -392,7 +392,7 @@ Return ONLY valid JSON with this structure:
                         </ul>
                       </div>
 
-                      {analysis.edgeCases.length > 0 && (
+                      {analysis && analysis.edgeCases.length > 0 && (
                         <div className="space-y-4">
                           <h3 className="text-lg font-semibold text-amber-400">
                             Edge Cases
