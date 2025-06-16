@@ -23,7 +23,7 @@ export const GoogleGeminiEffect = ({
 }) => {
   return (
     <div className={cn("sticky top-80", className)}>
-      <p className="text-lg md:text-7xl font-normal pb-4 text-center bg-clip-text font-doto text-transparent bg-gradient-to-b from-yellow-500 to-pink-500">
+      <p className="text-lg md:text-7xl  font-bold pb-4 text-center bg-clip-text font-doto text-transparent bg-gradient-to-b from-yellow-500 to-pink-600">
         {title || `Refact AI`}
       </p>
       <p className="text-xs md:text-xl font-normal font-bebas leading-loose tracking-wider text-center text-neutral-400 mt-4 max-w-lg mx-auto">

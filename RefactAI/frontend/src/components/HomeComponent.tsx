@@ -522,14 +522,9 @@ const HomeComponent: React.FC = () => {
             with confidence — powered by <Highlight>Refact AI</Highlight>.
           </p>
 
-          <div className="mt-6 flex gap-4">
-            <Link to="/login">
-              <button className="px-6 py-2 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white transition">
-                Get Started
-              </button>
-            </Link>
+          <div className="mt-6 ">
             <Link to="/docs">
-              <button className="px-6 py-2 rounded-full border border-gray-400 hover:border-white text-gray-800 dark:text-gray-200 transition">
+              <button className="px-6 py-2 rounded-full bg-blue-500 hover:bg-blue-600  hover:border-none text-black dark:text-black transition">
                 Learn More
               </button>
             </Link>
@@ -565,11 +560,11 @@ const HomeComponent: React.FC = () => {
 
           {/* Main content centered within the same section */}
           <div className="relative z-10 max-w-3xl mx-auto text-center pt-20">
-            <h1 className="text-3xl md:text-4xl font-medium mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">
+            <h1 className="text-3xl md:text-4xl font-medium mb-6 font-saira bg-gradient-to-r from-yellow-400 to-pink-500  bg-clip-text text-transparent">
               AI-Powered Code Refactoring for Modern Developers
             </h1>
 
-            <p className="text-lg text-gray-400 mb-10 leading-relaxed">
+            <p className="text-lg font-spacegrotesk text-gray-400 mb-10 leading-relaxed">
               Refact AI transforms the way you write code by analyzing your
               logic, evaluating time and space complexity, and delivering
               AI-enhanced, optimized solutions. Whether you're debugging or
@@ -578,12 +573,11 @@ const HomeComponent: React.FC = () => {
             </p>
 
             <div className="flex justify-center gap-4">
-              <button className="px-6 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded-md text-gray-200 font-medium transition-colors duration-300">
-                Try It Now
-              </button>
-              <button className="px-6 py-2 border border-gray-600 hover:border-pink-500 rounded-md text-gray-300 hover:text-pink-400 font-medium transition-colors duration-300">
-                View Documentation
-              </button>
+              <Link to='/docs'>
+                <button className="px-6 py-2 border border-gray-600 hover:border-pink-500 rounded-md text-gray-300 hover:text-pink-400 font-medium transition-colors duration-300">
+                  View Documentation
+                </button>
+              </Link>
             </div>
           </div>
         </div>
