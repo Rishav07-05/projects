@@ -40,3 +40,21 @@
 }
 
 
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(var(--rotation, 0deg));
+  }
+  50% {
+    transform: translateY(-10px) rotate(var(--rotation, 0deg));
+  }
+  100% {
+    transform: translateY(0px) rotate(var(--rotation, 0deg));
+  }
+}
+
+/* Apply the animation to your elements */
+.glow-code {
+  animation: float 3s ease-in-out infinite;
+}
+

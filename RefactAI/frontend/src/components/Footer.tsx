@@ -3,7 +3,7 @@
 const Footer = () => {
   return (
     <div>
-      <div className="relative w-full bg-black mt-44 border-t-2 rounded-2xl  ">
+      <div className="relative w-full bg-transparent border-none mt-44 border-t-2 rounded-2xl  ">
         {/* Main footer container */}
         <div className="max-w-7xl mx-auto px-6 py-12 md:py-16 flex flex-col md:flex-row">
           {/* Left side - Big Logo */}
