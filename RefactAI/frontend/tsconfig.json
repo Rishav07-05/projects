@@ -3,5 +3,11 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "jsx": "preserve",
+    "types": ["react", "react-dom", "framer-motion"],
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": false // Add this if you can't fix all type-only imports
+  }
 }

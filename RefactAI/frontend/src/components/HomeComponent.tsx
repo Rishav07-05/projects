@@ -27,7 +27,7 @@ interface StepItem {
 
 // Define the interface for the tech icon properties
 interface TechIconProps {
-  icon: JSX.Element; // React element for SVG
+  icon: React.ReactElement; // React element for SVG
   top: string;
   left: string;
   size: number;
