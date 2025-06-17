@@ -1,6 +1,6 @@
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
-import { useUser } from "@clerk/clerk-react";
-import { useRef, useState, useEffect } from "react";
+// import { useUser } from "@clerk/clerk-react";
+import {  useState } from "react";
 import toast from "react-hot-toast";
 import Compiler from "./components/Compiler";
 import Navbar from "./components/Navbar";
@@ -29,8 +29,6 @@ type AnalysisResult = {
 
 
 const Dashboard = () => {
-  const shownToast = useRef(false);
-  const { isSignedIn, user } = useUser();
   const [code, setCode] = useState("// Write your code here...");
   const [optimizedCode, setOptimizedCode] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -38,23 +36,6 @@ const Dashboard = () => {
   const [analysis, setAnalysis] = useState<AnalysisResult>();
   const [activeTab, setActiveTab] = useState("optimized");
 
-  useEffect(() => {
-    if (isSignedIn && !shownToast.current) {
-      toast.success(`Welcome ${user?.firstName || "back"}!`, {
-        id: "login-toast",
-        style: {
-          background: "#1e293b",
-          color: "#fff",
-          border: "1px solid #334155",
-        },
-        iconTheme: {
-          primary: "#6366f1",
-          secondary: "#fff",
-        },
-      });
-      shownToast.current = true;
-    }
-  }, [isSignedIn, user]);
 
   const handleOptimizeCode = async () => {
     setLoading(true);
@@ -66,25 +47,47 @@ const Dashboard = () => {
           messages: [
             {
               role: "system",
-              content: `[IMPORTANT] Analyze this ${language} code for:
-1. Time/Space complexity (Big O notation)
-2. Optimization opportunities
-3. Code quality issues
-4. Potential bugs
-5. Best practices
+              content: `You are an expert code analyzer that provides detailed optimization suggestions. For the provided ${language} code:
 
-Return ONLY valid JSON with this structure:
+1. FIRST analyze and understand the original code completely
+2. THEN generate an optimized version that:
+   - Improves time/space complexity
+   - Follows best practices
+   - Maintains identical functionality
+3. Provide detailed explanations for each optimization
+4. Return STRICT JSON format with these fields:
 {
-  "optimizedCode": "string",
-  "timeComplexity": "string",
-  "spaceComplexity": "string",
-  "suggestions": ["string"],
-  "score": number,
-  "summary": "string",
-  "potentialBugs": ["string"],
-  "bestPractices": ["string"],
-  "edgeCases": ["string"]
-}`,
+  "optimizedCode": "The complete optimized version of the code with comments explaining key changes",
+  "timeComplexity": "Detailed Big O analysis with justification",
+  "spaceComplexity": "Detailed space complexity analysis with justification", 
+  "suggestions": [
+    "Specific optimization suggestions with line numbers",
+    "Code quality improvements",
+    "Readability enhancements"
+  ],
+  "score": 0-100 rating of code quality,
+  "summary": "Overall assessment of the code",
+  "potentialBugs": [
+    "Potential issues with description and line numbers",
+    "Edge cases not handled"
+  ],
+  "bestPractices": [
+    "Specific best practices to implement",
+    "Language-specific improvements"
+  ],
+  "edgeCases": [
+    "Edge cases identified",
+    "Suggested handling approaches"
+  ]
+}
+
+IMPORTANT RULES:
+- The "optimizedCode" field MUST contain the complete rewritten code
+- Include detailed comments explaining key optimizations
+- Compare original vs optimized versions
+- Never omit the optimizedCode field
+- Maintain exact same functionality
+- Use modern language features when beneficial`,
             },
             {
               role: "user",

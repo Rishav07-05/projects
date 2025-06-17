@@ -18,7 +18,10 @@ const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
   useEffect(() => {
     const counter = { val: 0 };
 
-    gsap.to(counter, {
+    const tl = gsap.timeline();
+
+    // Animation timeline
+    tl.to(counter, {
       val: 100,
       duration: 5,
       ease: "power1.inOut",
@@ -30,22 +33,17 @@ const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
           ease: "power1.out",
         });
       },
+    }).to(contentRef.current, {
+      opacity: 0,
+      duration: 0.5,
       onComplete: () => {
-        // First fade out all content
-        gsap.to(contentRef.current, {
-          opacity: 0,
-          duration: 0.5,
-          onComplete: () => {
-            // Then hide the entire loader in one frame
-            if (loaderRef.current) {
-              gsap.set(loaderRef.current, {
-                opacity: 0,
-                display: "none",
-                onComplete: onComplete,
-              });
-            }
-          },
-        });
+        if (loaderRef.current) {
+          gsap.set(loaderRef.current, {
+            opacity: 0,
+            display: "none",
+            onComplete: onComplete,
+          });
+        }
       },
     });
 
@@ -57,6 +55,10 @@ const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
       duration: 1.5,
       ease: "power1.inOut",
     });
+
+    return () => {
+      tl.kill(); // Clean up animations on unmount
+    };
   }, [onComplete]);
 
   return (
@@ -64,10 +66,20 @@ const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
       ref={loaderRef}
       className="fixed top-0 left-0 w-screen h-screen bg-black flex flex-col items-center justify-center gap-4 z-50"
     >
-      <div ref={contentRef}>
+      <div
+        ref={contentRef}
+        className="flex flex-col items-center justify-center gap-4 w-full max-w-md px-4"
+      >
         {/* Lottie Animation */}
-        <div ref={lottieRef} className="w-40 h-40 md:w-56 md:h-56">
-          <Lottie animationData={animationData} loop />
+        <div
+          ref={lottieRef}
+          className="w-40 h-40 md:w-56 md:h-56 flex items-center justify-center"
+        >
+          <Lottie
+            animationData={animationData}
+            loop
+            style={{ width: "100%", height: "100%" }}
+          />
         </div>
 
         {/* Percentage Counter */}
@@ -81,7 +93,7 @@ const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
             ref={progressRef}
             className="h-full bg-gradient-to-r from-yellow-400 to-pink-600 rounded-full transition-all"
             style={{ width: "0%" }}
-          ></div>
+          />
         </div>
       </div>
     </div>
