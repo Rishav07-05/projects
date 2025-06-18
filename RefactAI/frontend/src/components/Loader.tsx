@@ -1,100 +1,122 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Lottie from "lottie-react";
 import animationData from "../../public/Animation - wire.json";
+import { useEffect, useRef } from "react";
 
 interface LoaderProps {
   onComplete: () => void;
 }
 
-const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
-  const [percent, setPercent] = useState(0);
+const Loader = ({ onComplete }: LoaderProps) => {
   const loaderRef = useRef<HTMLDivElement>(null);
   const lottieRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const lettersRef = useRef<(HTMLSpanElement | null)[]>([]);
+
+  // Initialize lettersRef with empty array
+  useEffect(() => {
+    lettersRef.current = lettersRef.current.slice(0, "CHANGE THE WORLD".length);
+  }, []);
 
   useEffect(() => {
-    const counter = { val: 0 };
+    const tl = gsap.timeline({
+      defaults: { ease: "power3.out" },
+    });
 
-    const tl = gsap.timeline();
+    // Filter out null values safely
+    const validLetters = lettersRef.current.filter(
+      (el): el is HTMLSpanElement => el !== null
+    );
+    const validLottie = lottieRef.current;
+    const validLoader = loaderRef.current;
 
-    // Animation timeline
-    tl.to(counter, {
-      val: 100,
-      duration: 5,
-      ease: "power1.inOut",
-      onUpdate: () => {
-        setPercent(Math.floor(counter.val));
-        gsap.to(progressRef.current, {
-          width: `${Math.floor(counter.val)}%`,
-          duration: 0.2,
-          ease: "power1.out",
-        });
-      },
-    }).to(contentRef.current, {
+    if (!validLottie || !validLoader || validLetters.length === 0) return;
+
+    // Initial state
+    gsap.set([validLottie, ...validLetters], {
       opacity: 0,
-      duration: 0.5,
-      onComplete: () => {
-        if (loaderRef.current) {
-          gsap.set(loaderRef.current, {
-            opacity: 0,
-            display: "none",
-            onComplete: onComplete,
-          });
-        }
-      },
+      y: 15,
     });
 
-    // Lottie animation scaling effect
-    gsap.to(lottieRef.current, {
-      scale: 1.05,
-      repeat: -1,
-      yoyo: true,
-      duration: 1.5,
-      ease: "power1.inOut",
-    });
+    // Animation sequence
+    tl.to(validLottie, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: "back.out(1.7)",
+    })
+      .to(
+        validLetters,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: {
+            each: 0.05,
+            from: "center",
+          },
+          ease: "back.out(1.5)",
+        },
+        "-=0.3"
+      )
+      .to(
+        validLetters,
+        {
+          color: "#14bedc",
+          duration: 0.2,
+          stagger: 0.02,
+        },
+        "+=0.3"
+      )
+      .to({}, { duration: 0.8 }) // Display duration
+      .to(
+        [validLottie, ...validLetters],
+        {
+          opacity: 0,
+          y: -20,
+          duration: 0.4,
+          stagger: 0.02,
+          ease: "power2.in",
+        },
+        "start"
+      )
+      .to(
+        validLoader,
+        {
+          opacity: 0,
+          duration: 0,
+          onComplete,
+        },
+        "-=0.2"
+      );
 
     return () => {
-      tl.kill(); // Clean up animations on unmount
+      tl.kill();
     };
   }, [onComplete]);
 
   return (
     <div
       ref={loaderRef}
-      className="fixed top-0 left-0 w-screen h-screen bg-black flex flex-col items-center justify-center gap-4 z-50"
+      className="fixed inset-0 bg-black flex flex-col items-center justify-center gap-3 z-[9999]"
     >
-      <div
-        ref={contentRef}
-        className="flex flex-col items-center justify-center gap-4 w-full max-w-md px-4"
-      >
-        {/* Lottie Animation */}
-        <div
-          ref={lottieRef}
-          className="w-40 h-40 md:w-56 md:h-56 flex items-center justify-center"
-        >
-          <Lottie
-            animationData={animationData}
-            loop
-            style={{ width: "100%", height: "100%" }}
-          />
-        </div>
+      <div ref={lottieRef} className="w-32 h-32 md:w-48 md:h-48">
+        <Lottie animationData={animationData} loop />
+      </div>
 
-        {/* Percentage Counter */}
-        <div className="text-4xl text-transparent bg-clip-text bg-gradient-to-b from-yellow-400 to-pink-600 font-pixelify md:text-6xl font-bold tracking-widest">
-          {percent}%
-        </div>
-
-        {/* Loading Bar */}
-        <div className="w-44 h-2 font-pixelify mt-4 bg-gray-700 rounded-full overflow-hidden">
-          <div
-            ref={progressRef}
-            className="h-full bg-gradient-to-r from-yellow-400 to-pink-600 rounded-full transition-all"
-            style={{ width: "0%" }}
-          />
-        </div>
+      <div className="flex text-xl md:text-2xl font-bold tracking-wider font-doto">
+        {"CHANGE THE WORLD".split("").map((letter, i) => (
+          <span
+            key={i}
+            ref={(el: HTMLSpanElement | null) => {
+              lettersRef.current[i] = el;
+            }}
+            className="inline-block opacity-0 text-[#dc1414]"
+            style={{ textShadow: "0 0 6px rgba(255,0,0,0.5)" }}
+          >
+            {letter === " " ? "\u00A0" : letter}
+          </span>
+        ))}
       </div>
     </div>
   );
