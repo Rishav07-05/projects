@@ -59,7 +59,8 @@ const DashFirst = () => {
     const fetchPosts = async () => {
       try {
         setIsLoading(true);
-        const res = await axios.get<Post[]>("http://localhost:5000/api/posts");
+        const res = await axios.get<Post[]>(
+          `${import.meta.env.VITE_API_BASE_URL}/api/posts`);
         setPosts(res.data.slice(0, 8));
       } catch (err) {
         console.error("Failed to fetch posts", err);

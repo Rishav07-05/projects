@@ -32,13 +32,15 @@ const Interact = () => {
     const fetchAllPosts = async () => {
       try {
         setLoading(true);
-        const res = await axios.get<Post[]>("http://localhost:5000/api/posts");
+        const res = await axios.get<Post[]>(
+          `${import.meta.env.VITE_API_BASE_URL}/api/posts`
+        );
         setAllPosts(res.data);
 
         if (user) {
           try {
             const likesRes = await axios.get<string[]>(
-              `http://localhost:5000/api/user/${user.id}/likes`
+              `${import.meta.env.VITE_API_BASE_URL}/api/user/${user.id}/likes`
             );
             setLikedPosts(new Set(likesRes.data));
           } catch (err) {
@@ -69,13 +71,13 @@ const Interact = () => {
 
       if (isLiked) {
         await axios.post<Post>(
-          `http://localhost:5000/api/posts/${postId}/unlike`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/posts/${postId}/unlike`,
           { userId: user.id }
         );
         newLikedPosts.delete(postId);
       } else {
         await axios.post<Post>(
-          `http://localhost:5000/api/posts/${postId}/like`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/posts/${postId}/like`,
           { userId: user.id }
         );
         newLikedPosts.add(postId);

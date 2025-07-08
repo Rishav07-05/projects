@@ -32,7 +32,7 @@ const Mypost: React.FC = () => {
       setLoading(true);
       setError(null);
       const res = await axios.get<Post[]>(
-        `http://localhost:5000/api/user/${user.id}/posts`
+        `${import.meta.env.VITE_API_BASE_URL}/api/user/${user.id}/posts`
       );
       setPosts(res.data);
     } catch (err) {
@@ -56,7 +56,7 @@ const Mypost: React.FC = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/${postId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/${postId}`, {
         data: { userId: user.id },
       });
       setPosts((prev) => prev.filter((p) => p._id !== postId));
