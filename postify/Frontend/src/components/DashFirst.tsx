@@ -60,7 +60,8 @@ const DashFirst = () => {
       try {
         setIsLoading(true);
         const res = await axios.get<Post[]>(
-          `${import.meta.env.VITE_API_BASE_URL}/api/posts`);
+          "https://postify-be.onrender.com/api/posts"
+        );
         setPosts(res.data.slice(0, 8));
       } catch (err) {
         console.error("Failed to fetch posts", err);
