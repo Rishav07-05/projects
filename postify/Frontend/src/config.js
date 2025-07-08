@@ -1,1 +1,0 @@
-export const  SERVER = "https://postify-be.onrender.com"
