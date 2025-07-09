@@ -9,15 +9,17 @@ import Mypost from "./components/Mypost";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Page />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/share" element={<Share />} />
-        <Route path="/interact" element={<Interact />} />
-        <Route path="/mypost" element={<Mypost />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Page />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/share" element={<Share />} />
+          <Route path="/interact" element={<Interact />} />
+          <Route path="/mypost" element={<Mypost />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 };
 
