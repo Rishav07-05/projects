@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "@studio-freight/lenis";
 import BoxCarouselDemo from "./UI/BoxCarouselDemo";
 
-import {  SignUpButton } from "@clerk/clerk-react";
+import {  SignInButton } from "@clerk/clerk-react";
 import "../index.css";
 
 
@@ -278,11 +278,11 @@ const FlipCard = () => {
         <p className="text-center text-[#ff7300] text-sm md:text-xl font-medium mt-2 md:mt-4 font-michroma">
           Join us today for more such interaction
         </p>
-        <SignUpButton mode="redirect" forceRedirectUrl="/dashboard">
+        <SignInButton mode="redirect" forceRedirectUrl="/dashboard">
           <button className=" w-1/2 md:w-1/12 h-10 bg-[#f1e2c3] text-[#000000] font-bold text-sm md:text-base rounded-xl shadow-lg transition-all duration-300 transform hover:bg-[#ff7300] hover:-rotate-3 hover:scale-105 hover:shadow-xl">
             Get Started<span className="ml-1">→</span>
           </button>
-        </SignUpButton>
+        </SignInButton>
       </section>
 
       {/* Last Section - Made Responsive */}

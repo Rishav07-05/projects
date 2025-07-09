@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SignUpButton } from "@clerk/clerk-react";
+import { SignInButton } from "@clerk/clerk-react";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -190,11 +191,11 @@ const HorizontalPage = () => {
               Every idea deserves a place — whether it's a joke, a deep thought,
               or something random. Share it. Shape it. Start something.
             </p>
-            <SignUpButton mode="redirect" forceRedirectUrl="/dashboard">
+            <SignInButton mode="redirect" forceRedirectUrl="/dashboard">
               <button className=" w-1/2 md:w-1/3 h-10 bg-[#ff7300] cursor-pointer text-[#000000] font-bold text-sm md:text-base rounded-xl shadow-lg transition-all duration-300 transform hover:bg-[#f1e2c3] hover:-rotate-3 hover:scale-105 hover:shadow-xl">
                 Get Started<span className="ml-1">→</span>
               </button>
-            </SignUpButton>
+            </SignInButton>
           </div>
 
           <div className="relative w-full md:w-[400px] h-[200px] flex items-center justify-center mt-6 md:mt-0">
