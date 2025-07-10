@@ -62,48 +62,50 @@ const Interact = () => {
     fetchAllPosts();
   }, [user]);
 
-  const handleLike = async (postId: string) => {
-    if (!user) return;
+const handleLike = async (postId: string) => {
+  if (!user) return;
 
-    try {
-      const isLiked = likedPosts.has(postId);
-      const newLikedPosts = new Set(likedPosts);
+  const isLiked = likedPosts.has(postId);
+  const newLikedPosts = new Set(likedPosts);
 
-      if (isLiked) {
-        await axios.post<Post>(
-          `${import.meta.env.VITE_API_BASE_URL}/api/posts/${postId}/unlike`,
-          { userId: user.id }
-        );
-        newLikedPosts.delete(postId);
-      } else {
-        await axios.post<Post>(
-          `${import.meta.env.VITE_API_BASE_URL}/api/posts/${postId}/like`,
-          { userId: user.id }
-        );
-        newLikedPosts.add(postId);
-      }
+  try {
+    if (isLiked) {
+      // Unlike
+      await axios.post<Post>(
+        `${import.meta.env.VITE_API_BASE_URL}/api/posts/${postId}/unlike`,
+        { userId: user.id }
+      );
+      newLikedPosts.delete(postId);
+    } else {
+      // Like
+      await axios.post<Post>(
+        `${import.meta.env.VITE_API_BASE_URL}/api/posts/${postId}/like`,
+        { userId: user.id }
+      );
+      newLikedPosts.add(postId);
+    }
 
-      setLikedPosts(newLikedPosts);
+    setLikedPosts(newLikedPosts);
 
-      setAllPosts((prevPosts) =>
-        prevPosts.map((post) => {
-          if (post._id === postId) {
-            return {
+    setAllPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post._id === postId
+          ? {
               ...post,
               likes: isLiked
                 ? post.likes.filter((id) => id !== user.id)
                 : [...post.likes, user.id],
-            };
-          }
-          return post;
-        })
-      );
-    } catch (err) {
-      const error = err as AxiosError;
-      console.error("Error updating like:", error);
-      alert(error.response?.data?.toString() || "Failed to update like");
-    }
-  };
+            }
+          : post
+      )
+    );
+  } catch (err) {
+    const error = err as AxiosError;
+    console.error("Error toggling like:", error);
+    alert(error.response?.data?.toString() || "Failed to update like.");
+  }
+};
+
 
   if (loading) {
     return (

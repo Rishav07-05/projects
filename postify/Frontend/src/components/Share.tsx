@@ -76,7 +76,7 @@ const Share = () => {
             onSubmit={handleSubmit}
             className="w-full bg-[#111]/90 backdrop-blur-sm p-6 rounded-2xl shadow-xl border border-[#cfbfa0]/30"
           >
-            {/* Hidden file input */}
+
             <input
               type="file"
               ref={fileInputRef}
@@ -85,7 +85,6 @@ const Share = () => {
               className="hidden"
             />
 
-            {/* Custom file upload area */}
             <div
               onClick={handleFileClick}
               onDragOver={(e) => {

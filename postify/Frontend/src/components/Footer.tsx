@@ -15,7 +15,7 @@ const Footer = () => {
 
   return (
     <>
-      {/* Toggle Button */}
+
       <div className="fixed left-0 top-1/2 -translate-y-1/2 z-50">
         <button
           onClick={() => setOpen(!open)}
@@ -51,7 +51,6 @@ const Footer = () => {
         </button>
       </div>
 
-      {/* Contact Panel with Dark Glass */}
       <div
         className={clsx(
           "fixed left-20 top-1/2 -translate-y-1/2 z-40 w-80 md:w-96 h-[420px] rounded-2xl overflow-hidden",
@@ -62,18 +61,14 @@ const Footer = () => {
             : "opacity-0 -translate-x-10 pointer-events-none"
         )}
       >
-        {/* Deep Dark Glass Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a]/95 to-[#111111]/90 backdrop-blur-3xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]" />
 
-        {/* Subtle noise texture */}
         <div className="absolute inset-0 bg-[url('/noise.png')] opacity-15 mix-blend-overlay" />
 
-        {/* Subtle grid pattern */}
         <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,transparent_70%,black)] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
 
-        {/* Content */}
         <div className="relative z-10 h-full flex flex-col p-8">
-          {/* Header */}
+
           <div className="mb-8 group">
             <h2 className="text-3xl font-bold text-center font-michroma tracking-tight">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#e0cb9f] via-[#e9710f] to-[#f3d7bf] bg-[length:200%] group-hover:bg-[position:100%] transition-all duration-1000">
@@ -85,7 +80,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Social Links */}
+
           <ul className="flex-1 space-y-6">
             {[
               {
@@ -172,7 +167,6 @@ const Footer = () => {
             ))}
           </ul>
 
-          {/* Footer Text */}
           <div
             className={clsx(
               "mt-6 text-xs text-white/60 tracking-wider text-center",
@@ -191,7 +185,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Global styles for animations */}
       {/* <style jsx global>{`
         @keyframes shimmer {
           0% {

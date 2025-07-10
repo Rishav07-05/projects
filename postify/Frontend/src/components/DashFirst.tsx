@@ -93,7 +93,6 @@ const DashFirst = () => {
           <Footer />
           <Navbar activePath="/dashboard" />
 
-          {/* Swiper Section - Responsive Carousel */}
           <div className="w-full mt-24 px-4 md:px-10">
             <Swiper
               modules={[FreeMode, Autoplay]}
@@ -139,7 +138,6 @@ const DashFirst = () => {
             </Swiper>
           </div>
 
-          {/* Hero Section */}
           <section className="mt-32 flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 px-4 md:px-10 pb-20">
             <div className="w-full md:w-1/2 flex justify-center">
               <img
@@ -169,7 +167,6 @@ const DashFirst = () => {
             </div>
           </section>
 
-          {/* Recent Posts Section */}
           <section className="px-4 md:px-10 mb-20">
             <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-white">
               Recent Posts
@@ -221,7 +218,6 @@ const DashFirst = () => {
             )}
           </section>
 
-          {/* Interactive Community Section */}
           <section className="h-[85vh] w-full relative z-10 border-none">
             <div className="absolute inset-0 overflow-hidden border-none">
               <Preview />

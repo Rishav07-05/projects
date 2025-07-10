@@ -22,8 +22,7 @@ const Mypost: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  // const [activePost, setActivePost] = useState<Post | null>(null);
-  // const [showModal, setShowModal] = useState(false);
+
 
   const fetchPosts = async () => {
     if (!user?.id) return;
@@ -105,7 +104,6 @@ const Mypost: React.FC = () => {
     }));
   };
 
-  // SVG Components
   const PlusIcon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -1,20 +1,36 @@
+import { useEffect, useState } from "react";
+import PostifyLoader from "../src/components/UI/PostifyLoader"; 
 import HorizontalPage from "./components/HorizontalPage";
-import Sniper from "./components/Sniper"
+import Sniper from "./components/Sniper";
 import FlipCard from "./components/FlipCard";
 import Footer from "./components/Footer";
 
-
-
-
 const Page = () => {
-    return (
-      <>
-        <Footer />
-        <Sniper />
-        <HorizontalPage />
-        <FlipCard />
-      </>
-    );
-}
+  const [loading, setLoading] = useState(true);
 
-export default Page
+  useEffect(() => {
+    // Simulate loading for 2 seconds (you can use any logic here)
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      {loading ? (
+        <PostifyLoader />
+      ) : (
+        <>
+          <Footer />
+          <Sniper />
+          <HorizontalPage />
+          <FlipCard />
+        </>
+      )}
+    </>
+  );
+};
+
+export default Page;

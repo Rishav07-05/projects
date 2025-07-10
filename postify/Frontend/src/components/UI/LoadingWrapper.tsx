@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 interface LoadingWrapperProps {
-  isLoading?: boolean; // Make optional since internal loading is handled too
+  isLoading?: boolean;
   children: React.ReactNode;
 }
 

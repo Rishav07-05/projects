@@ -279,7 +279,7 @@ const FlipCard = () => {
           Join us today for more such interaction
         </p>
         <SignInButton mode="redirect" forceRedirectUrl="/dashboard">
-          <button className=" w-1/2 md:w-1/12 h-10 bg-[#f1e2c3] text-[#000000] font-bold text-sm md:text-base rounded-xl shadow-lg transition-all duration-300 transform hover:bg-[#ff7300] hover:-rotate-3 hover:scale-105 hover:shadow-xl">
+          <button className="w-3/4 sm:w-2/3 md:w-1/4 lg:w-1/6 xl:w-1/12 h-10 bg-[#f1e2c3] text-[#000000] font-bold text-sm md:text-base rounded-xl shadow-lg transition-all duration-300 transform hover:bg-[#ff7300] hover:-rotate-3 hover:scale-105 hover:shadow-xl">
             Get Started<span className="ml-1">→</span>
           </button>
         </SignInButton>
