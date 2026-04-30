@@ -103,6 +103,9 @@ const COMPLEXITY_VALUES: Record<ComplexityType, [number, number, number]> = {
   "O(n!)": [30, 100, 200],
 };
 
+
+
+
 const DEFAULT_CODE =
   '// Write your code here\nfunction example() {\n  return "Hello World";\n}';
 
@@ -285,7 +288,7 @@ const Compiler = () => {
       const response = await axios.post(
         "https://openrouter.ai/api/v1/chat/completions",
         {
-          model: "openai/gpt-3.5-turbo",
+          model: "openai/gpt-5.1-chat",
           messages: [
             {
               role: "system",
